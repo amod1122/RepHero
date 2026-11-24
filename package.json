@@ -1,10 +1,13 @@
 {
-  "name": "nafa-technologies-website",
+  "name": "rephero-marketing-website",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "node scripts/check-placeholders.mjs && next build",
+    "build:strict": "node scripts/check-placeholders.mjs --strict && next build",
+    "check:placeholders": "node scripts/check-placeholders.mjs",
+    "test:e2e": "node tests/e2e/runner.mjs",
     "start": "next start",
     "lint": "next lint"
   },

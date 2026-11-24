@@ -1,131 +1,175 @@
 "use client";
 
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown } from "lucide-react";
-import { useSiteModals } from "@/context/ModalContext";
+import React, { useState, useRef } from "react";
+import { Plus } from "lucide-react";
+import { FAQ_ITEMS } from "@/content";
+import type { FAQItem, FAQCategory } from "@/content/types";
 
-interface FAQItem {
-  question: string;
-  answer: string;
-  category: string;
+export interface FAQAccordionProps {
+  items?: FAQItem[];
+  category?: FAQCategory | "all";
+  allowMultiple?: boolean;
+  defaultOpenId?: string | null;
+  showCategoryFilter?: boolean;
+  limit?: number;
+  className?: string;
 }
 
-const faqs: FAQItem[] = [
-  {
-    category: "Voice Quality",
-    question: "Will our callers know they are speaking with an AI voice agent?",
-    answer:
-      "Most callers cannot distinguish our agents from a seasoned receptionist, thanks to sub-500ms response times and natural speech cadence. If explicitly asked, the agent answers honestly per your compliance guidelines.",
-  },
-  {
-    category: "Integration",
-    question: "Do we need to switch our business phone number or telephone carrier?",
-    answer:
-      "No. You keep your current carrier and phone numbers. We set up simple conditional call forwarding (when busy, after 3 rings, or after hours) in under 5 minutes.",
-  },
-  {
-    category: "Edge Cases",
-    question: "What happens if a caller asks a complex question or has an emergency?",
-    answer:
-      "Urgent calls trigger an immediate live warm transfer to your on-call staff alongside instant SMS alerts. Unrecognized questions are noted for team follow-up.",
-  },
-  {
-    category: "CRM & Calendar",
-    question: "Which calendars and CRMs does Nafa synchronize with?",
-    answer:
-      "We integrate directly with ServiceTitan, Jobber, Housecall Pro, Clio, GoHighLevel, Google Calendar, Outlook, and Zapier. Appointments sync in seconds.",
-  },
-  {
-    category: "Speed-to-Lead",
-    question: "How does the Speed-to-Lead system work for website and Facebook form fills?",
-    answer:
-      "When a lead submits a web or ad form, Nafa dials them within 45 seconds while buyer intent is highest. Simultaneously, an automated SMS reaches them immediately.",
-  },
-  {
-    category: "Launch Timeline",
-    question: "How long does deployment take from kickoff to going live?",
-    answer:
-      "Deployments take 3 to 7 business days. We configure your company knowledge base, test live calls together, and launch once you are 100% satisfied.",
-  },
+const CATEGORIES: { label: string; value: FAQCategory | "all" }[] = [
+  { label: "All Questions", value: "all" },
+  { label: "General", value: "general" },
+  { label: "Pricing & Billing", value: "pricing" },
+  { label: "HIPAA & Compliance", value: "compliance" },
+  { label: "Placement Process", value: "process" },
 ];
 
-export default function FAQAccordion() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
-  const { openSchedule } = useSiteModals();
+export function FAQAccordion({
+  items = FAQ_ITEMS,
+  category = "all",
+  allowMultiple = false,
+  defaultOpenId = null,
+  showCategoryFilter = false,
+  limit,
+  className = "",
+}: FAQAccordionProps) {
+  const [selectedCategory, setSelectedCategory] = useState<FAQCategory | "all">(category);
+  const [openIds, setOpenIds] = useState<string[]>(() => {
+    if (defaultOpenId) return [defaultOpenId];
+    return [];
+  });
+  const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
-  const toggle = (idx: number) => {
-    setOpenIndex(openIndex === idx ? null : idx);
+  // Filter items by category
+  let filteredItems = items;
+  if (selectedCategory !== "all") {
+    filteredItems = items.filter((item) => item.category === selectedCategory);
+  }
+
+  // Apply limit if specified
+  if (limit && limit > 0) {
+    filteredItems = filteredItems.slice(0, limit);
+  }
+
+  const toggleItem = (id: string) => {
+    setOpenIds((prev) => {
+      if (allowMultiple) {
+        return prev.includes(id) ? prev.filter((openId) => openId !== id) : [...prev, id];
+      } else {
+        return prev.includes(id) ? [] : [id];
+      }
+    });
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
+    switch (e.key) {
+      case "ArrowDown":
+        e.preventDefault();
+        const nextIndex = (index + 1) % filteredItems.length;
+        buttonRefs.current[nextIndex]?.focus();
+        break;
+      case "ArrowUp":
+        e.preventDefault();
+        const prevIndex = (index - 1 + filteredItems.length) % filteredItems.length;
+        buttonRefs.current[prevIndex]?.focus();
+        break;
+      case "Home":
+        e.preventDefault();
+        buttonRefs.current[0]?.focus();
+        break;
+      case "End":
+        e.preventDefault();
+        buttonRefs.current[filteredItems.length - 1]?.focus();
+        break;
+    }
   };
 
   return (
-    <section id="faqs" className="relative py-14 sm:py-20 px-6 sm:px-10 lg:px-12 max-w-5xl mx-auto">
-      <div className="text-center max-w-3xl mx-auto mb-16">
-        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium tracking-[-0.03em] text-white leading-[1.1]">
-          Everything you need to know about Nafa deployment.
-        </h2>
-        <p className="mt-4 text-[15px] sm:text-[16px] text-[#A6B4C7] max-w-[65ch] mx-auto leading-relaxed">
-          Direct answers to common questions about voice fidelity, security, integrations, and deployment timelines.
-        </p>
-      </div>
-
-      <div className="space-y-3">
-        {faqs.map((faq, idx) => {
-          const isOpen = openIndex === idx;
-          return (
-            <motion.div
-              key={faq.question}
-              initial={{ opacity: 0, y: 14 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: idx * 0.05 }}
-              className={`rounded-lg border transition-all duration-300 overflow-hidden ${
-                isOpen
-                  ? "border-white/30 bg-white/[0.06] shadow-lg shadow-black/40"
-                  : "border-white/10 bg-black/40 hover:border-white/20 hover:bg-white/[0.03]"
-              }`}
-            >
+    <div className={`w-full ${className}`}>
+      {/* Optional Category Filter Pills */}
+      {showCategoryFilter && (
+        <div className="flex flex-wrap items-center gap-2 mb-8" role="tablist" aria-label="FAQ Categories">
+          {CATEGORIES.map((cat) => {
+            const isSelected = selectedCategory === cat.value;
+            return (
               <button
-                onClick={() => toggle(idx)}
-                className="w-full text-left px-6 py-5 flex items-center justify-between gap-4 cursor-pointer focus:outline-none min-h-[52px]"
-                aria-expanded={isOpen}
+                key={cat.value}
+                type="button"
+                role="tab"
+                aria-selected={isSelected}
+                onClick={() => {
+                  setSelectedCategory(cat.value);
+                  setOpenIds([]);
+                }}
+                className={`px-3.5 py-1.5 text-xs font-sans font-medium rounded-[2px] transition-colors ${
+                  isSelected
+                    ? "bg-charcoal text-white"
+                    : "bg-mist text-slate hover:text-charcoal hover:bg-slate-200/60"
+                }`}
               >
-                <div className="flex items-center gap-3">
-                  <span className="text-xs font-mono uppercase tracking-wider text-[#A6B4C7] px-2.5 py-1 rounded bg-white/5 border border-white/10 hidden sm:inline-block">
-                    {faq.category}
-                  </span>
-                  <span className="text-[15px] sm:text-[16px] font-medium text-white tracking-[-0.01em]">
-                    {faq.question}
-                  </span>
-                </div>
-                <div
-                  className={`w-8 h-8 rounded flex items-center justify-center border border-white/10 bg-white/5 text-white shrink-0 transition-transform duration-300 ${
-                    isOpen ? "rotate-180 bg-white/10 border-white/30" : ""
-                  }`}
-                >
-                  <ChevronDown className="w-4 h-4 text-white/80" />
-                </div>
+                {cat.label}
               </button>
+            );
+          })}
+        </div>
+      )}
 
-              <AnimatePresence>
-                {isOpen && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                    className="overflow-hidden"
+      {/* Accordion Items List */}
+      {filteredItems.length === 0 ? (
+        <p className="text-slate text-sm py-6">No questions found in this category.</p>
+      ) : (
+        <div className="divide-y divide-line border-t border-b border-line">
+          {filteredItems.map((item, index) => {
+            const isOpen = openIds.includes(item.id);
+            const panelId = `faq-panel-${item.id}`;
+            const buttonId = `faq-btn-${item.id}`;
+
+            return (
+              <div key={item.id} className="py-2">
+                <h3>
+                  <button
+                    ref={(el) => {
+                      buttonRefs.current[index] = el;
+                    }}
+                    type="button"
+                    id={buttonId}
+                    aria-expanded={isOpen}
+                    aria-controls={panelId}
+                    onClick={() => toggleItem(item.id)}
+                    onKeyDown={(e) => handleKeyDown(e, index)}
+                    className="w-full flex items-center justify-between text-left py-4 px-1 group transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-charcoal rounded-[2px]"
                   >
-                    <div className="px-6 pb-6 pt-1 text-sm leading-relaxed text-[#A6B4C7] border-t border-white/5 max-w-[58ch]">
-                      {faq.answer}
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
-          );
-        })}
-      </div>
-    </section>
+                    <span className="font-sans font-semibold text-base sm:text-lg text-charcoal group-hover:text-navy transition-colors pr-6">
+                      {item.question}
+                    </span>
+                    <span
+                      className={`w-7 h-7 shrink-0 rounded-[2px] bg-mist flex items-center justify-center text-charcoal transition-transform duration-200 ${
+                        isOpen ? "rotate-45 bg-sky/30 text-navy" : "group-hover:bg-slate-200/70"
+                      }`}
+                      aria-hidden="true"
+                    >
+                      <Plus className="w-4 h-4" />
+                    </span>
+                  </button>
+                </h3>
+
+                <div
+                  id={panelId}
+                  role="region"
+                  aria-labelledby={buttonId}
+                  hidden={!isOpen}
+                  className={`px-1 pb-4 transition-all duration-200 ${isOpen ? "block" : "hidden"}`}
+                >
+                  <p className="text-slate text-sm sm:text-base leading-relaxed">
+                    {item.answer}
+                  </p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
   );
 }
+
+export default FAQAccordion;

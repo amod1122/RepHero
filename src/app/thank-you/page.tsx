@@ -1,77 +1,117 @@
-"use client";
-
-import React from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
-import { Check, ArrowLeft, Calendar, ArrowRight, ShieldCheck } from "lucide-react";
+import {
+  BRAND_NAME,
+  DISCOVERY_CALL_LENGTH_MINUTES,
+  SEO_METADATA,
+} from "@/content";
+
+export const metadata: Metadata = {
+  title: { absolute: SEO_METADATA.thankYou.title },
+  description: SEO_METADATA.thankYou.description,
+  alternates: {
+    canonical: SEO_METADATA.thankYou.canonical,
+  },
+  robots: {
+    index: false,
+    follow: true,
+  },
+  openGraph: {
+    title: SEO_METADATA.thankYou.title,
+    description: SEO_METADATA.thankYou.description,
+    url: SEO_METADATA.thankYou.canonical,
+    siteName: BRAND_NAME,
+    type: "website",
+  },
+};
 
 export default function ThankYouPage() {
-  const CALENDLY_URL = "https://calendly.com/ahmadalimalik224/30min";
+  const steps = [
+    {
+      num: "1",
+      title: "Review & Assessment",
+      desc: "Our staffing directors review your practice specifications, software systems, and role requirements.",
+    },
+    {
+      num: "2",
+      title: "Custom Proposal",
+      desc: "We formulate a tailored staffing proposal with flat monthly pricing and candidate qualifications.",
+    },
+    {
+      num: "3",
+      title: "Discovery Call",
+      desc: `We meet for your ${DISCOVERY_CALL_LENGTH_MINUTES}-minute consultation to review the plan and answer your questions.`,
+    },
+  ];
 
   return (
-    <div className="relative min-h-[85vh] flex items-center justify-center px-4 sm:px-6 lg:px-8 py-20 text-white">
-      {/* Background ambient lighting */}
-      <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-white/[0.03] blur-[140px] pointer-events-none rounded-full"
-        aria-hidden="true"
-      />
-
-      <div className="relative z-10 max-w-xl w-full">
-        {/* Floating Card container matching the clean mock card design */}
-        <div className="apple-glass rounded-2xl p-8 sm:p-12 border border-white/15 shadow-2xl text-center relative overflow-hidden backdrop-blur-2xl bg-black/60">
-          
-          {/* Subtle top edge glow */}
-          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
-
-          {/* Minimal Checkmark Badge (Clean circle with checkmark, like the mockup) */}
-          <div className="inline-flex items-center justify-center mb-6">
-            <div className="w-12 h-12 rounded-full border border-white/20 bg-white/[0.08] flex items-center justify-center text-white shadow-lg">
-              <Check className="w-6 h-6 stroke-[2.5]" />
-            </div>
-          </div>
-
-          {/* Elegant Display Title */}
-          <h1 className="font-editorial text-4xl sm:text-6xl text-white tracking-wide mb-3">
-            Thank You !
+    <main className="min-h-screen bg-white text-slate py-16 px-6 md:px-12 flex items-center justify-center">
+      <div className="max-w-2xl w-full mx-auto text-center border border-line rounded-[2px] p-8 md:p-12 bg-white shadow-sm">
+        {/* 1. Confirmation Section */}
+        <section data-section="confirmation" id="confirmation" className="mb-8">
+          <span className="text-xs uppercase tracking-[0.08em] text-navy font-medium block mb-2">
+            Inquiry Received
+          </span>
+          <h1 className="font-serif text-[40px] md:text-[56px] text-charcoal leading-tight font-normal mb-4">
+            Thank You!
           </h1>
-
-          {/* Subheading in clean serif / body */}
-          <p className="text-base sm:text-lg text-white/90 font-light mb-2">
-            We got your request. We'll get back to you soon.
+          <p className="text-base text-slate leading-relaxed max-w-lg mx-auto">
+            We have received your discovery call request. A {BRAND_NAME} healthcare staffing director will review your practice information and be in touch shortly.
           </p>
+        </section>
 
-          <p className="text-xs sm:text-sm text-[#A6B4C7] max-w-md mx-auto leading-relaxed mb-8">
-            Our engineering team reviews project specifications within 5 minutes during business hours.
-          </p>
-
-          {/* Action Buttons: Primary 'Go Back' pill like the mockup, plus secondary Book Call */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-            <Link
-              href="/"
-              className="btn btn-solid w-full sm:w-auto h-[44px] px-8 text-xs sm:text-sm font-semibold rounded-full flex items-center justify-center gap-2"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              <span>Go Back</span>
-            </Link>
-
-            <a
-              href={CALENDLY_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-ghost w-full sm:w-auto h-[44px] px-6 text-xs sm:text-sm font-medium rounded-full flex items-center justify-center gap-2 text-white/90 hover:text-white"
-            >
-              <Calendar className="w-4 h-4" />
-              <span>Book a Call Too</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </a>
+        {/* 2. Expectation Cards Section */}
+        <section
+          data-section="expectation-cards"
+          id="expectation-cards"
+          className="text-left mb-8 pt-6 border-t border-line"
+        >
+          <h2 className="font-sans font-medium text-sm text-charcoal uppercase tracking-wider mb-4 text-center">
+            What Happens Next
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {steps.map((s) => (
+              <div key={s.num} className="p-4 bg-mist rounded-[2px] border border-line">
+                <span className="font-serif text-lg text-navy font-bold block mb-1">
+                  Step {s.num}
+                </span>
+                <span className="font-medium text-charcoal text-xs block mb-1">
+                  {s.title}
+                </span>
+                <p className="text-[11px] text-slate leading-relaxed">
+                  {s.desc}
+                </p>
+              </div>
+            ))}
           </div>
+        </section>
 
-          {/* Verified Delivery Note */}
-          <div className="mt-8 pt-6 border-t border-white/10 flex items-center justify-center gap-2 text-[11px] text-[#A6B4C7]">
-            <ShieldCheck className="w-3.5 h-3.5 text-white/70" />
-            <span>Submission received & routed directly to engineering</span>
-          </div>
-        </div>
+        {/* 3. Return Links Section */}
+        <section
+          data-section="return-links"
+          id="return-links"
+          className="flex flex-wrap items-center justify-center gap-4 pt-6 border-t border-line"
+        >
+          <Link
+            href="/"
+            className="inline-flex items-center justify-center font-medium text-sm px-6 py-2.5 rounded-[2px] bg-charcoal text-white hover:bg-ink transition-colors shadow-sm"
+          >
+            Return Home
+          </Link>
+          <Link
+            href="/services"
+            className="inline-flex items-center justify-center font-medium text-sm px-6 py-2.5 rounded-[2px] border border-line text-charcoal hover:bg-mist transition-colors"
+          >
+            Explore All 9 Roles
+          </Link>
+          <Link
+            href="/success-stories"
+            className="inline-flex items-center justify-center font-medium text-sm px-6 py-2.5 rounded-[2px] border border-line text-charcoal hover:bg-mist transition-colors"
+          >
+            View Success Stories
+          </Link>
+        </section>
       </div>
-    </div>
+    </main>
   );
 }

@@ -1,198 +1,239 @@
-"use client";
-
-import React from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import {
-  PhoneCall,
-  Zap,
-  Globe,
-  CheckCircle2,
-  ArrowRight,
-  Sparkles,
-  ChevronRight,
-} from "lucide-react";
-import { useSiteModals } from "@/context/ModalContext";
+  BRAND_NAME,
+  SERVICE_ROLES,
+  SERVICES_HEADER,
+  CATEGORY_TABS,
+  PRICING_NOTE,
+  SERVICES_TRUST_BLOCK,
+  FAQ_ITEMS,
+  CTA_LABELS,
+  SEO_METADATA,
+  RoleCategory,
+} from "@/content";
+import { RoleCard } from "@/components/RoleCard";
+import { FAQAccordion } from "@/components/FAQAccordion";
+
+export const metadata: Metadata = {
+  title: { absolute: SEO_METADATA.services.title },
+  description: SEO_METADATA.services.description,
+  alternates: {
+    canonical: SEO_METADATA.services.canonical,
+  },
+  openGraph: {
+    title: SEO_METADATA.services.title,
+    description: SEO_METADATA.services.description,
+    url: SEO_METADATA.services.canonical,
+    siteName: BRAND_NAME,
+    type: "website",
+  },
+};
 
 export default function ServicesPage() {
-  const { openSchedule, openQuoteModal } = useSiteModals();
-
-  const services = [
-    {
-      id: "ai-call-agent",
-      name: "AI Call Agent (Voice Receptionist)",
-      icon: PhoneCall,
-      tag: "Inbound Phone Automation",
-      href: "/services/ai-call-agent",
-      desc: "A 24/7 AI-powered voice receptionist that answers every inbound call on ring one, qualifies prospective customers, handles FAQs, and books appointments directly into your calendar.",
-      bullets: [
-        "24/7/365 coverage — nights, weekends, and holidays",
-        "Never puts callers on hold or routes to voicemail",
-        "Qualifies callers and captures exact project & appointment specs",
-        "Integrates with your existing phone number with zero friction",
-      ],
-      bestFor: "Contractors, clinics, law firms, and service businesses losing after-hours leads.",
-    },
-    {
-      id: "speed-to-lead",
-      name: "Speed-to-Lead Outbound Agent",
-      icon: Zap,
-      tag: "Highest Conversion ROI",
-      href: "/services/speed-to-lead",
-      desc: "An automated outbound AI agent that calls new web form submissions and ad leads within 60 seconds to qualify them and book appointments before competitors even check their email.",
-      bullets: [
-        "Calls web inquiries within 60 seconds (Harvard 5-minute rule)",
-        "21x higher qualification rate than 30-minute follow-ups",
-        "Warm transfers hot prospects directly to your team",
-        "Handles objection questions and calendar booking automatically",
-      ],
-      bestFor: "Businesses running paid ads (Google LSA, Meta) or high-volume lead funnels.",
-    },
-    {
-      id: "ai-website",
-      name: "Custom Website Build & Redesign",
-      icon: Globe,
-      tag: "Web Design & Modern Redesign",
-      href: "/services/ai-website",
-      desc: "A clean, modern website built from scratch or a complete redesign of your existing site. Fast load times, mobile-first layouts, and integrated lead capture.",
-      bullets: [
-        "Engineered strictly for conversions: turns visitors into phone calls and booked appointments",
-        "Lightning-fast mobile load times (under 2 seconds)",
-        "High-performance hosting and custom domain included",
-        "Pre-wired to feed leads directly into your Speed-to-Lead agent",
-      ],
-      bestFor: "Businesses needing a modern new site or looking to redesign their old website.",
-    },
+  const categories: RoleCategory[] = [
+    "Admin and Executive",
+    "Revenue Cycle and Compliance",
+    "Extended and Creative",
   ];
 
+  const pricingFaqs = FAQ_ITEMS.filter(
+    (f) => f.category === "pricing" || f.category === "general"
+  );
+
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: pricingFaqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  };
+
   return (
-    <div className="pt-28 pb-20 sm:pt-36 sm:pb-28">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-14 sm:mb-20">
-          <div className="badge-pill inline-flex items-center gap-2 mb-4">
-            <Sparkles className="w-3.5 h-3.5 text-white" />
-            <span>Core Capabilities • 100% Done For You</span>
-          </div>
-          <h1 className="text-4xl sm:text-5xl font-medium tracking-tight text-white mb-4">
-            Our AI <em className="font-editorial not-italic text-[#9a9a9a]">Automation</em> Systems
+    <main className="min-h-screen bg-white text-slate">
+      {/* FAQPage Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
+
+      {/* 1. Header Section */}
+      <section
+        data-section="header"
+        id="header"
+        className="py-16 md:py-20 px-6 md:px-12 text-center bg-mist border-b border-line"
+      >
+        <div className="max-w-3xl mx-auto">
+          <span className="text-xs uppercase tracking-[0.08em] text-slate/80 font-medium">
+            {SERVICES_HEADER.eyebrow}
+          </span>
+          <h1 className="font-serif text-[40px] md:text-[56px] text-charcoal leading-tight mt-2 mb-4 font-normal">
+            {SERVICES_HEADER.heading}
           </h1>
-          <p className="text-base sm:text-lg text-[#9a9a9a] max-w-2xl mx-auto leading-relaxed">
-            We don't hand you software to figure out on your own. Nafa designs, builds, tests, and manages high-impact voice and response systems for your business.
+          <p className="text-base md:text-lg text-slate leading-relaxed">
+            {SERVICES_HEADER.description}
           </p>
         </div>
+      </section>
 
-        {/* 3 Core Offers Detail Cards */}
-        <div className="space-y-6 mb-16 sm:mb-24">
-          {services.map((svc) => {
-            const Icon = svc.icon;
-            return (
-              <div
-                key={svc.id}
-                className="apple-glass rounded-lg p-6 sm:p-8 flex flex-col lg:flex-row gap-8 items-start justify-between text-white"
-              >
-                <div className="space-y-4 max-w-2xl">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-[6px] border border-white/15 bg-white/[0.05] text-white flex items-center justify-center shrink-0">
-                      <Icon className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#9a9a9a]">
-                        {svc.tag}
-                      </span>
-                      <h2 className="text-xl sm:text-2xl font-medium text-white tracking-tight">
-                        {svc.name}
-                      </h2>
-                    </div>
-                  </div>
-
-                  <p className="text-sm sm:text-[15px] text-[#9a9a9a] leading-relaxed">
-                    {svc.desc}
-                  </p>
-
-                  <div className="space-y-2 pt-2">
-                    <span className="text-xs font-medium uppercase tracking-wider text-white/80 block">
-                      Key Capabilities:
-                    </span>
-                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs sm:text-sm text-white/90">
-                      {svc.bullets.map((b, idx) => (
-                        <li key={idx} className="flex items-start gap-2">
-                          <CheckCircle2 className="w-4 h-4 text-white shrink-0 mt-0.5" />
-                          <span>{b}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="p-3 rounded-[6px] bg-white/[0.02] border border-white/10 text-xs text-[#9a9a9a]">
-                    <strong className="text-white">Best for:</strong> {svc.bestFor}
-                  </div>
-                </div>
-
-                <div className="w-full lg:w-60 flex flex-col gap-3 shrink-0 pt-2 lg:pt-0">
-                  <Link
-                    href={svc.href}
-                    className="btn btn-ghost w-full h-[42px] text-xs sm:text-sm"
-                  >
-                    <span>View Service Details</span>
-                    <ChevronRight className="w-4 h-4 ml-1" />
-                  </Link>
-
-                  <button
-                    onClick={() => openQuoteModal(svc.name)}
-                    className="btn btn-solid w-full h-[42px] text-xs sm:text-sm font-semibold"
-                  >
-                    <span>Get Custom Quote</span>
-                    <ArrowRight className="w-3.5 h-3.5 ml-1" />
-                  </button>
-                </div>
-              </div>
-            );
-          })}
+      {/* 2. Category Tabs */}
+      <section
+        data-section="category-tabs"
+        id="category-tabs"
+        className="sticky top-[73px] z-20 bg-white/95 backdrop-blur-sm border-b border-line py-4 px-6 md:px-12"
+      >
+        <div className="max-w-[1200px] mx-auto flex flex-wrap items-center justify-center gap-2 md:gap-4">
+          {CATEGORY_TABS.map((tab) => (
+            <a
+              key={tab.id}
+              href={tab.anchor}
+              className="text-xs md:text-sm font-medium px-4 py-2 rounded-[2px] bg-mist text-charcoal border border-line hover:border-navy hover:text-navy transition-colors"
+            >
+              {tab.label}
+            </a>
+          ))}
         </div>
+      </section>
 
-        {/* Growth Bundles Section */}
-        <div className="apple-glass rounded-lg p-8 sm:p-10 text-center lg:text-left mb-16 border border-white/20">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
-            <div className="space-y-3 max-w-2xl">
-              <span className="badge-pill text-xs">
-                ★ Maximized Conversion Package
-              </span>
-              <h2 className="text-2xl sm:text-3xl font-medium tracking-tight text-white">
-                The Full <em className="font-editorial not-italic text-[#9a9a9a]">Growth System</em>
-              </h2>
-              <p className="text-sm text-[#9a9a9a] leading-relaxed">
-                Connect your <strong>High-Converting Website</strong> with both the <strong>Speed-to-Lead Agent</strong> and <strong>24/7 AI Call Agent</strong>. Inbound callers never hit voicemail, and every website form is called back in under 60 seconds.
-              </p>
-              <div className="flex flex-wrap gap-4 pt-2 text-xs font-medium text-white/90">
-                <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-white" /> Complete End-to-End Setup
+      {/* 3. Role Cards */}
+      <section
+        data-section="role-cards"
+        id="role-cards"
+        className="py-16 px-6 md:px-12 max-w-[1200px] mx-auto space-y-16"
+      >
+        {categories.map((category) => {
+          const catId = category.toLowerCase().replace(/\s+/g, "-");
+          const roles = SERVICE_ROLES.filter((r) => r.category === category);
+          return (
+            <div key={category} id={catId} className="scroll-mt-32">
+              <div className="border-b border-line pb-4 mb-8">
+                <span className="text-xs uppercase tracking-wider text-navy font-semibold">
+                  Category
                 </span>
-                <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-white" /> Bundled Architecture Discount
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-white" /> Ongoing Neural Voice Model Tuning
-                </span>
+                <h2 className="font-serif text-2xl md:text-3xl text-charcoal font-normal mt-1">
+                  {category}
+                </h2>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {roles.map((role) => (
+                  <RoleCard key={role.id} role={role} />
+                ))}
               </div>
             </div>
+          );
+        })}
+      </section>
 
-            <div className="flex flex-col sm:flex-row lg:flex-col gap-3 w-full lg:w-56 shrink-0">
-              <button
-                onClick={() => openQuoteModal("The Full Growth System")}
-                className="btn btn-solid w-full h-[42px] text-xs sm:text-sm font-semibold"
-              >
-                Request Bundle Quote
-              </button>
-              <button
-                onClick={openSchedule}
-                className="btn btn-ghost w-full h-[42px] text-xs sm:text-sm"
-              >
-                Schedule Walkthrough
-              </button>
-            </div>
+      {/* 4. Pricing Note */}
+      <section
+        data-section="pricing-note"
+        id="pricing-note"
+        className="py-16 px-6 md:px-12 bg-mist border-y border-line"
+      >
+        <div className="max-w-[800px] mx-auto text-center">
+          <span className="text-xs uppercase tracking-[0.08em] text-slate/80 font-medium">
+            {PRICING_NOTE.eyebrow}
+          </span>
+          <h2 className="font-serif text-[32px] md:text-[44px] text-charcoal mt-2 mb-4 font-normal">
+            {PRICING_NOTE.heading}
+          </h2>
+          <p className="text-slate leading-relaxed mb-6 text-base">
+            {PRICING_NOTE.description}
+          </p>
+          <div className="p-6 bg-white border border-line rounded-[2px] text-left">
+            <h3 className="font-sans font-medium text-charcoal text-sm mb-2">Custom Quote Roles</h3>
+            <p className="text-xs md:text-sm text-slate leading-relaxed">
+              {PRICING_NOTE.customQuoteDetails}
+            </p>
           </div>
         </div>
-      </div>
-    </div>
+      </section>
+
+      {/* 5. Trust Block */}
+      <section
+        data-section="trust-block"
+        id="trust-block"
+        className="py-16 px-6 md:px-12 max-w-[1200px] mx-auto"
+      >
+        <div className="text-center max-w-2xl mx-auto mb-12">
+          <span className="text-xs uppercase tracking-[0.08em] text-slate/80 font-medium">
+            {SERVICES_TRUST_BLOCK.eyebrow}
+          </span>
+          <h2 className="font-serif text-[32px] md:text-[44px] text-charcoal mt-2 font-normal">
+            {SERVICES_TRUST_BLOCK.heading}
+          </h2>
+          <p className="text-slate mt-4 text-base">
+            {SERVICES_TRUST_BLOCK.description}
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {SERVICES_TRUST_BLOCK.points.map((pt, idx) => (
+            <div
+              key={idx}
+              className="p-6 bg-mist border border-line rounded-[2px] border-l-2 border-l-navy"
+            >
+              <p className="text-sm font-medium text-charcoal leading-snug">{pt}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 6. Pricing FAQ */}
+      <section
+        data-section="faq"
+        id="faq"
+        className="py-16 px-6 md:px-12 bg-mist border-t border-line"
+      >
+        <div className="max-w-[800px] mx-auto">
+          <div className="text-center mb-12">
+            <span className="text-xs uppercase tracking-[0.08em] text-slate/80 font-medium">
+              Pricing & Contracts
+            </span>
+            <h2 className="font-serif text-[32px] md:text-[44px] text-charcoal mt-2 font-normal">
+              Frequently Asked Questions
+            </h2>
+            <p className="text-slate mt-2 text-sm">
+              Common questions about rates, contract flexibility, and billing setup.
+            </p>
+          </div>
+          <FAQAccordion items={pricingFaqs} allowMultiple={false} />
+        </div>
+      </section>
+
+      {/* 7. Closing CTA */}
+      <section
+        data-section="cta"
+        id="cta"
+        className="py-20 px-6 md:px-12 bg-ink text-white text-center"
+      >
+        <div className="max-w-[800px] mx-auto">
+          <h2 className="font-serif text-[36px] md:text-[52px] leading-tight mb-6">
+            Find the Right Remote Professional for Your Practice
+          </h2>
+          <p className="text-lg text-slate-300 max-w-xl mx-auto mb-8">
+            Speak with our healthcare staffing specialists in a 15-minute consultation to review role specifications and candidate profiles.
+          </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <Link
+              href="/book-a-call"
+              className="inline-flex items-center justify-center font-medium px-6 py-3 rounded-[2px] bg-white text-ink hover:bg-mist transition-colors shadow-sm"
+            >
+              {CTA_LABELS.primary}
+            </Link>
+            <Link
+              href="/savings-calculator"
+              className="inline-flex items-center justify-center font-medium px-6 py-3 rounded-[2px] bg-white/10 text-white border border-white/20 hover:bg-white/20 transition-colors"
+            >
+              {CTA_LABELS.secondaryCalculator}
+            </Link>
+          </div>
+        </div>
+      </section>
+    </main>
   );
 }

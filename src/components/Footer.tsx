@@ -1,167 +1,175 @@
-"use client";
-
 import React from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { ArrowUp, ArrowUpRight, Mail } from "lucide-react";
-import { useSiteModals } from "@/context/ModalContext";
+import {
+  BRAND_NAME,
+  COMPANY_NAME,
+  SUPPORTING_LINE,
+  COMPLIANCE_STATEMENT,
+  COPYRIGHT_TEXT,
+  FOOTER_COLUMNS,
+  CONTACT_INFO,
+  SOCIAL_LINKS,
+} from "@/content";
 
-const groups = [
-  {
-    label: "Solutions",
-    links: [
-      ["AI Call Agent", "/services/ai-call-agent"],
-      ["Speed-to-Lead", "/services/speed-to-lead"],
-      ["Web Architecture", "/services/ai-website"],
-      ["All Services", "/services"],
-    ],
-  },
-  {
-    label: "Platform",
-    links: [
-      ["How It Works", "/how-it-works"],
-      ["Industries", "/industries"],
-      ["Pricing & Bundles", "/pricing"],
-    ],
-  },
-  {
-    label: "Company",
-    links: [
-      ["About Nafa", "/about"],
-      ["Insights", "/blog"],
-      ["Contact", "/contact"],
-      ["Privacy Policy", "/privacy-policy"],
-      ["Terms of Service", "/terms-of-service"],
-    ],
-  },
-];
-
-export default function Footer() {
-  const { openSchedule, openQuoteModal } = useSiteModals();
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+export function Footer() {
+  const companyCol = FOOTER_COLUMNS.find((c) => c.title === "Company");
+  const servicesCol = FOOTER_COLUMNS.find((c) => c.title === "Services");
+  const contactCol = FOOTER_COLUMNS.find((c) => c.title === "Contact");
+  const legalCol = FOOTER_COLUMNS.find((c) => c.title === "Legal");
 
   return (
-    <footer className="relative z-10 border-t border-white/10 bg-black/90 backdrop-blur-xl mt-12 sm:mt-16">
-      <div className="mx-auto max-w-7xl px-6 py-14 sm:px-8 lg:px-12">
-        <div className="grid gap-12 lg:grid-cols-[1.3fr_2fr]">
+    <footer className="bg-ink text-white border-t border-white/10" role="contentinfo">
+      <div className="max-w-content mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-12 sm:pt-20 sm:pb-16">
+        
+        {/* 5 Directory Columns Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8">
+          
+          {/* Column 1: Brand & Identity */}
+          <div className="lg:col-span-1 flex flex-col justify-between">
+            <div>
+              <a
+                href="/"
+                className="font-sans font-bold text-2xl tracking-tight text-white hover:opacity-85 transition-opacity inline-flex items-center"
+                aria-label={`${BRAND_NAME} Home`}
+              >
+                <span>RepHero</span>
+                <span className="text-sky">.</span>
+              </a>
+              <p className="mt-3 text-xs text-white/50 uppercase tracking-wider font-semibold">
+                {COMPANY_NAME}
+              </p>
+              <p className="mt-3 text-xs text-slate-300 leading-relaxed">
+                {SUPPORTING_LINE}
+              </p>
+            </div>
+
+            <div className="mt-6 flex flex-col gap-3">
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[2px] bg-white/5 border border-white/10 text-[11px] text-sky font-medium w-fit">
+                HIPAA-Trained & Signed BAA
+              </div>
+              <a
+                href={SOCIAL_LINKS.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs text-slate-400 hover:text-white transition-colors inline-flex items-center gap-1 w-fit"
+                aria-label="RepHero on LinkedIn (opens in a new window)"
+              >
+                LinkedIn <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </div>
+
+          {/* Column 2: Company */}
           <div>
-            <Link
-              href="/"
-              className="inline-flex items-center gap-3 text-white no-underline group"
-              aria-label="Nafa Technologies home"
-            >
-              <div className="relative w-8 h-8 rounded-[6px] overflow-hidden border border-white/20 bg-white/[0.04] backdrop-blur-md flex items-center justify-center p-0.5 shrink-0 transition-transform duration-300 group-hover:scale-105">
-                <Image
-                  src="/nafa-logo-white.png"
-                  alt="Nafa Technologies Logo"
-                  width={30}
-                  height={30}
-                  className="object-contain"
-                />
-              </div>
-              <div className="flex flex-col text-left">
-                <span className="text-[15px] font-semibold tracking-[-0.03em] text-white leading-tight">
-                  Nafa
-                </span>
-                <span className="text-xs text-muted leading-none">
-                  Technologies
-                </span>
-              </div>
-            </Link>
-
-            <p className="mt-4 max-w-sm text-sm leading-6 text-muted">
-              Operational AI voice infrastructure, immediate speed-to-lead systems, and high-converting web architecture for businesses that never miss an opportunity.
-            </p>
-
-            <div className="mt-6 flex flex-wrap items-center gap-2.5">
-              <button
-                onClick={() => openQuoteModal()}
-                className="btn btn-solid h-[44px] px-4 text-xs font-semibold"
-              >
-                Get a Quote <ArrowUpRight className="ml-1 h-3.5 w-3.5" />
-              </button>
-              <button
-                onClick={openSchedule}
-                className="btn btn-ghost h-[44px] px-3.5 text-xs font-medium text-white/80 hover:text-white"
-              >
-                Book a Call
-              </button>
-            </div>
-
-            <div className="mt-4 flex flex-wrap items-center gap-2.5">
-              <a
-                href="https://www.instagram.com/nafatechnologies?rpxt=YWZ0dmdiNDM2djMz&utm_source=qr"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="h-8 px-2.5 rounded-[5px] border border-white/10 bg-white/[0.03] hover:bg-white/10 text-muted hover:text-white flex items-center gap-1.5 text-xs transition-colors"
-                aria-label="Nafa Instagram"
-              >
-                <svg className="w-3.5 h-3.5 fill-none stroke-current stroke-2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                </svg>
-                <span>Instagram</span>
-              </a>
-              <a
-                href="https://www.linkedin.com/in/ahmad-ali-8527a93ba?utm_source=share_via&utm_content=profile&utm_medium=member_ios"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="h-8 px-2.5 rounded-[5px] border border-white/10 bg-white/[0.03] hover:bg-white/10 text-muted hover:text-white flex items-center gap-1.5 text-xs transition-colors"
-                aria-label="CEO LinkedIn"
-              >
-                <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
-                  <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.53 1.53 0 0 0 1.53-1.53A1.53 1.53 0 0 0 6.46 5.7a1.53 1.53 0 0 0-1.53 1.53c0 .85.68 1.53 1.53 1.53m1.39 9.74v-8.37H5.07v8.37z" />
-                </svg>
-                <span>CEO LinkedIn</span>
-              </a>
-              <a
-                href="mailto:contact@nafatech.site"
-                className="h-8 px-2.5 rounded-[5px] border border-white/10 bg-white/[0.03] hover:bg-white/10 text-muted hover:text-white flex items-center gap-1.5 text-xs transition-colors"
-                aria-label="Direct Email"
-              >
-                <Mail className="w-3.5 h-3.5" />
-                <span>contact@nafatech.site</span>
-              </a>
-            </div>
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-sky mb-4">
+              Company
+            </h3>
+            <ul className="space-y-2.5">
+              {companyCol?.links.map((link) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    className="text-sm text-slate-300 hover:text-white transition-colors"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
 
-          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
-            {groups.map((group) => (
-              <div key={group.label}>
-                <h3 className="text-xs font-semibold  text-muted">
-                  {group.label}
-                </h3>
-                <ul className="mt-4 space-y-2.5">
-                  {groups.find((g) => g.label === group.label)?.links.map(([label, href]) => (
-                    <li key={href}>
-                      <Link
-                        href={href}
-                        className="text-sm text-muted transition-colors hover:text-white"
-                      >
-                        {label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+          {/* Column 3: Services */}
+          <div>
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-sky mb-4">
+              Services
+            </h3>
+            <ul className="space-y-2.5">
+              {servicesCol?.links.map((link) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    className="text-sm text-slate-300 hover:text-white transition-colors"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Column 4: Contact */}
+          <div>
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-sky mb-4">
+              Contact
+            </h3>
+            <ul className="space-y-2.5 text-sm text-slate-300">
+              <li>
+                <a
+                  href="/book-a-call"
+                  className="text-white font-medium hover:text-sky transition-colors inline-flex items-center gap-1"
+                >
+                  Book a Discovery Call <span aria-hidden="true">→</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href={`mailto:${CONTACT_INFO.email}`}
+                  className="hover:text-white transition-colors"
+                >
+                  {CONTACT_INFO.email}
+                </a>
+              </li>
+              <li>
+                <a
+                  href={`tel:${CONTACT_INFO.phone.replace(/[^+\d]/g, "")}`}
+                  className="hover:text-white transition-colors"
+                >
+                  {CONTACT_INFO.phone}
+                </a>
+              </li>
+              <li className="text-xs text-slate-400 pt-1">
+                {CONTACT_INFO.location}
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 5: Legal */}
+          <div>
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-sky mb-4">
+              Legal
+            </h3>
+            <ul className="space-y-2.5">
+              {legalCol?.links.map((link) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    className="text-sm text-slate-300 hover:text-white transition-colors"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 
-        <div className="mt-14 flex flex-col gap-4 border-t border-white/10 pt-6 text-xs text-muted sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} Nafa Technologies. </p>
-          <button
-            onClick={scrollToTop}
-            className="inline-flex items-center gap-1.5 self-start text-muted transition-colors hover:text-white sm:self-auto cursor-pointer min-h-[44px]"
-          >
-            Back to top <ArrowUp className="h-3.5 w-3.5" />
-          </button>
+        {/* BAA & HIPAA Compliance Statement */}
+        <div className="mt-14 pt-8 border-t border-white/10">
+          <p className="text-xs text-slate-400 leading-relaxed max-w-4xl">
+            {COMPLIANCE_STATEMENT}
+          </p>
         </div>
+
+        {/* Bottom Bar: Copyright & Details */}
+        <div className="mt-8 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+          <p>{COPYRIGHT_TEXT}</p>
+          <p className="text-slate-400">
+            Trained remote healthcare staffing · Zero PHI stored on web
+          </p>
+        </div>
+
       </div>
     </footer>
   );
 }
+
+export default Footer;

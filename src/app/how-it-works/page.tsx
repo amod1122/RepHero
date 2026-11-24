@@ -1,165 +1,224 @@
-"use client";
-
-import React from "react";
+import type { Metadata } from "next";
+import Link from "next/link";
 import {
-  PhoneCall,
-  Hammer,
-  Rocket,
-  Headphones,
-  CheckCircle2,
-  Calendar,
-  ShieldCheck,
-  Users,
-} from "lucide-react";
-import { useSiteModals } from "@/context/ModalContext";
+  BRAND_NAME,
+  HOW_IT_WORKS_STEPS,
+  HOW_IT_WORKS_HEADER,
+  WHAT_TO_EXPECT,
+  COMMUNICATION_REPORTING,
+  DISCOVERY_CALL_LENGTH_MINUTES,
+  CTA_LABELS,
+  FAQ_ITEMS,
+  SEO_METADATA,
+} from "@/content";
+import { FAQAccordion } from "@/components/FAQAccordion";
+
+export const metadata: Metadata = {
+  title: { absolute: SEO_METADATA.howItWorks.title },
+  description: SEO_METADATA.howItWorks.description,
+  alternates: {
+    canonical: SEO_METADATA.howItWorks.canonical,
+  },
+  openGraph: {
+    title: SEO_METADATA.howItWorks.title,
+    description: SEO_METADATA.howItWorks.description,
+    url: SEO_METADATA.howItWorks.canonical,
+    siteName: BRAND_NAME,
+    type: "website",
+  },
+};
 
 export default function HowItWorksPage() {
-  const { openSchedule, openQuoteModal } = useSiteModals();
-
-  const stages = [
-    {
-      step: "01",
-      icon: PhoneCall,
-      title: "15-Minute Strategy & Discovery Session",
-      duration: "Day 1",
-      desc: "We discuss your business model, typical customer inquiries, operating hours, emergency procedures, and how you currently handle calls. Zero prep needed on your end.",
-      deliverables: [
-        "Call intake questions & qualification criteria",
-        "Objection handling rules & pricing guidelines",
-        "Calendar & CRM integration mapping",
-      ],
-    },
-    {
-      step: "02",
-      icon: Hammer,
-      title: "Custom System Engineering & Script Tuning",
-      duration: "Days 2 - 4",
-      desc: "Our team configures your AI voice receptionist, builds out your knowledge base, programs speed-to-lead triggers, and tunes the conversational voice model. 100% in-house — no outsourcing.",
-      deliverables: [
-        "Natural speech synthesis tuning",
-        "Sub-second voice response latency optimization",
-        "Rigorous edge-case and scenario testing",
-      ],
-    },
-    {
-      step: "03",
-      icon: Rocket,
-      title: "Testing, Number Routing & Launch",
-      duration: "Days 5 - 7",
-      desc: "We test the live phone line with you so you can hear the AI agent handle realistic calls. We set up simple forwarding on your existing business number and turn on live lead handling.",
-      deliverables: [
-        "Zero disruption to your current phone number",
-        "Simulated test calls with your team",
-        "Live deployment with automated lead card notifications",
-      ],
-    },
-    {
-      step: "04",
-      icon: Headphones,
-      title: "Ongoing Monitoring & Continuous Tuning",
-      duration: "Post-Launch",
-      desc: "We monitor your system's performance weekly, review call transcripts, refine answers to new questions, and ensure your appointment booking rate stays high.",
-      deliverables: [
-        "Regular knowledge base updates",
-        "Direct access to your systems engineer",
-        "Monthly performance and ROI reviews",
-      ],
-    },
-  ];
+  const processFaqs = FAQ_ITEMS.filter(
+    (f) => f.category === "process" || f.category === "compliance"
+  );
 
   return (
-    <div className="pt-28 pb-20 sm:pt-36 sm:pb-28 text-white">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-14 sm:mb-20">
-          <div className="badge-pill inline-flex items-center gap-1.5 mb-4">
-            <ShieldCheck className="w-3.5 h-3.5 text-white" />
-            <span>Zero Fluff • Direct Access to Builders</span>
-          </div>
-          <h1 className="text-4xl sm:text-5xl font-medium tracking-tight text-white mb-4">
-            How We Get You Live in <em className="font-editorial not-italic text-[#9a9a9a]">Days</em>, Not Months
+    <main className="min-h-screen bg-white text-slate">
+      {/* 1. Header Section */}
+      <section
+        data-section="header"
+        id="header"
+        className="py-16 md:py-20 px-6 md:px-12 text-center bg-mist border-b border-line"
+      >
+        <div className="max-w-3xl mx-auto">
+          <span className="text-xs uppercase tracking-[0.08em] text-slate/80 font-medium">
+            {HOW_IT_WORKS_HEADER.eyebrow}
+          </span>
+          <h1 className="font-serif text-[40px] md:text-[56px] text-charcoal leading-tight mt-2 mb-4 font-normal">
+            {HOW_IT_WORKS_HEADER.heading}
           </h1>
-          <p className="text-base sm:text-lg text-[#9a9a9a] max-w-2xl mx-auto leading-relaxed">
-            You don't have to hire developers, learn complex software, or manage outsourced contractors. We engineer, deploy, and support your systems directly.
+          <p className="text-base md:text-lg text-slate leading-relaxed">
+            From our initial {DISCOVERY_CALL_LENGTH_MINUTES}-minute discovery consultation to full workflow integration, our streamlined 6-step onboarding process ensures HIPAA compliance, clinical quality, and zero disruption to your daily patient care.
           </p>
         </div>
+      </section>
 
-        {/* 4 Stages Detailed Walkthrough */}
-        <div className="space-y-6 mb-16">
-          {stages.map((stage) => {
-            const Icon = stage.icon;
-            return (
-              <div
-                key={stage.step}
-                className="apple-glass rounded-lg p-6 sm:p-8 flex flex-col md:flex-row gap-6 md:gap-8 items-start justify-between"
-              >
-                <div className="flex items-center gap-4 shrink-0">
-                  <div className="w-12 h-12 rounded-[6px] border border-white/15 bg-white/[0.05] text-white flex items-center justify-center font-semibold">
-                    <Icon className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <span className="text-[11px] font-semibold uppercase text-white/90 tracking-wider">
-                      Stage {stage.step}
-                    </span>
-                    <div className="text-xs text-[#9a9a9a] font-mono">{stage.duration}</div>
-                  </div>
-                </div>
-
-                <div className="space-y-3 flex-1">
-                  <h2 className="text-xl sm:text-2xl font-medium text-white tracking-tight">
-                    {stage.title}
-                  </h2>
-                  <p className="text-xs sm:text-sm text-[#9a9a9a] leading-relaxed">
-                    {stage.desc}
-                  </p>
-
-                  <div className="pt-2">
-                    <span className="text-[11px] font-medium uppercase tracking-wider text-white/80 block mb-1.5">
-                      What We Deliver:
-                    </span>
-                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-white/90">
-                      {stage.deliverables.map((item, idx) => (
-                        <li key={idx} className="flex items-center gap-2">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-white shrink-0" />
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
+      {/* 2. Timeline Steps */}
+      <section
+        data-section="timeline-steps"
+        id="timeline-steps"
+        className="py-16 px-6 md:px-12 max-w-[1000px] mx-auto space-y-8"
+      >
+        {HOW_IT_WORKS_STEPS.map((step) => (
+          <div
+            key={step.step}
+            className="border border-line rounded-[2px] p-6 sm:p-8 bg-white flex flex-col md:flex-row gap-6 items-start hover:border-navy/40 transition-colors shadow-sm"
+          >
+            <div className="flex items-center justify-center w-12 h-12 rounded-[2px] bg-ink text-white font-serif text-2xl shrink-0">
+              {step.step}
+            </div>
+            <div className="flex-1">
+              <div className="flex flex-wrap items-baseline gap-2 mb-2">
+                <h2 className="font-sans font-semibold text-xl text-charcoal">
+                  {step.title}
+                </h2>
+                <span className="text-xs text-navy font-medium">
+                  • {step.subtitle}
+                </span>
               </div>
-            );
-          })}
-        </div>
+              <p className="text-sm md:text-base text-slate leading-relaxed mb-4">
+                {step.description}
+              </p>
+              <div className="space-y-1.5 pt-3 border-t border-line">
+                <span className="text-xs uppercase tracking-wider text-slate/70 font-medium block">
+                  Key Activities:
+                </span>
+                <ul className="text-xs md:text-sm text-slate space-y-1.5 list-disc list-inside">
+                  {step.details.map((detail, idx) => (
+                    <li key={idx}>{detail}</li>
+                  ))}
+                </ul>
+              </div>
+              {step.deliverable && (
+                <div className="mt-4 pt-3 border-t border-line flex items-center gap-2 text-xs text-charcoal">
+                  <strong className="text-navy font-semibold">Deliverable:</strong>
+                  <span>{step.deliverable}</span>
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+      </section>
 
-        {/* No Outsourcing Guarantee Banner */}
-        <div className="apple-glass rounded-lg p-8 sm:p-12 text-center max-w-3xl mx-auto space-y-4 mb-16 border border-white/20">
-          <div className="w-10 h-10 rounded-[6px] border border-white/15 bg-white/[0.05] text-white mx-auto flex items-center justify-center">
-            <Users className="w-5 h-5" />
+      {/* 3. What to Expect */}
+      <section
+        data-section="what-to-expect"
+        id="what-to-expect"
+        className="py-16 px-6 md:px-12 bg-mist border-y border-line"
+      >
+        <div className="max-w-[800px] mx-auto">
+          <div className="text-center mb-10">
+            <span className="text-xs uppercase tracking-[0.08em] text-slate/80 font-medium">
+              {WHAT_TO_EXPECT.eyebrow}
+            </span>
+            <h2 className="font-serif text-[32px] md:text-[44px] text-charcoal mt-2 font-normal">
+              {WHAT_TO_EXPECT.heading}
+            </h2>
+            <p className="text-slate mt-3 text-base">
+              {WHAT_TO_EXPECT.timeToStart}
+            </p>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-medium tracking-tight text-white">
-            The Nafa Promise: <em className="font-editorial not-italic text-[#9a9a9a]">No Outsourcing</em>, No Middlemen
-          </h2>
-          <p className="text-xs sm:text-sm text-[#9a9a9a] leading-relaxed max-w-xl mx-auto">
-            When you partner with Nafa Technologies, the people on your strategy calls are the same engineers building and tuning your voice models. We never farm work out to cheap overseas contractors.
-          </p>
-          <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
-            <button
-              onClick={openSchedule}
-              className="btn btn-solid h-[42px] px-6 text-xs sm:text-sm font-semibold flex items-center justify-center gap-2"
-            >
-              <Calendar className="w-4 h-4" />
-              <span>Book Your Discovery Call</span>
-            </button>
-            <button
-              onClick={() => openQuoteModal()}
-              className="btn btn-ghost h-[42px] px-6 text-xs sm:text-sm"
-            >
-              Get a Free Quote
-            </button>
+          <div className="bg-white border border-line rounded-[2px] p-8 shadow-sm">
+            <ul className="space-y-3">
+              {WHAT_TO_EXPECT.points.map((point, idx) => (
+                <li key={idx} className="flex items-start text-sm text-slate">
+                  <span className="w-1.5 h-1.5 rounded-full bg-navy mt-2 mr-3 shrink-0" />
+                  <span className="leading-relaxed">{point}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
-      </div>
-    </div>
+      </section>
+
+      {/* 4. Communication & Reporting */}
+      <section
+        data-section="communication-reporting"
+        id="communication-reporting"
+        className="py-16 px-6 md:px-12 max-w-[1000px] mx-auto"
+      >
+        <div className="text-center max-w-2xl mx-auto mb-12">
+          <span className="text-xs uppercase tracking-[0.08em] text-slate/80 font-medium">
+            {COMMUNICATION_REPORTING.eyebrow}
+          </span>
+          <h2 className="font-serif text-[32px] md:text-[44px] text-charcoal mt-2 font-normal">
+            {COMMUNICATION_REPORTING.heading}
+          </h2>
+          <p className="text-slate mt-4 text-base">
+            {COMMUNICATION_REPORTING.description}
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {COMMUNICATION_REPORTING.channels.map((ch, idx) => (
+            <div
+              key={idx}
+              className="p-6 bg-mist border border-line rounded-[2px] flex flex-col justify-between"
+            >
+              <div>
+                <h3 className="font-sans font-semibold text-charcoal text-base mb-2">
+                  {ch.title}
+                </h3>
+                <p className="text-xs md:text-sm text-slate leading-relaxed">
+                  {ch.desc}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 5. Process FAQ */}
+      <section
+        data-section="faq"
+        id="faq"
+        className="py-16 px-6 md:px-12 bg-mist border-t border-line"
+      >
+        <div className="max-w-[800px] mx-auto">
+          <div className="text-center mb-12">
+            <span className="text-xs uppercase tracking-[0.08em] text-slate/80 font-medium">
+              Process & Integration
+            </span>
+            <h2 className="font-serif text-[32px] md:text-[44px] text-charcoal mt-2 font-normal">
+              Frequently Asked Questions
+            </h2>
+            <p className="text-slate mt-2 text-sm">
+              Answers regarding matching, EHR software integration, and candidate approval.
+            </p>
+          </div>
+          <FAQAccordion items={processFaqs} allowMultiple={false} />
+        </div>
+      </section>
+
+      {/* 6. Closing CTA */}
+      <section
+        data-section="cta"
+        id="cta"
+        className="py-20 px-6 md:px-12 bg-ink text-white text-center"
+      >
+        <div className="max-w-[800px] mx-auto">
+          <h2 className="font-serif text-[36px] md:text-[52px] leading-tight mb-6">
+            Ready to Begin Your Discovery Call?
+          </h2>
+          <p className="text-lg text-slate-300 max-w-xl mx-auto mb-8">
+            Schedule your focused {DISCOVERY_CALL_LENGTH_MINUTES}-minute consultation with a RepHero healthcare staffing director.
+          </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <Link
+              href="/book-a-call"
+              className="inline-flex items-center justify-center font-medium px-6 py-3 rounded-[2px] bg-white text-ink hover:bg-mist transition-colors shadow-sm"
+            >
+              {CTA_LABELS.primary}
+            </Link>
+            <Link
+              href="/savings-calculator"
+              className="inline-flex items-center justify-center font-medium px-6 py-3 rounded-[2px] bg-white/10 text-white border border-white/20 hover:bg-white/20 transition-colors"
+            >
+              {CTA_LABELS.secondaryCalculator}
+            </Link>
+          </div>
+        </div>
+      </section>
+    </main>
   );
 }

@@ -69,10 +69,23 @@ export function ModalProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
+const defaultModalContext: ModalContextType = {
+  isScheduleOpen: false,
+  openSchedule: () => {},
+  closeSchedule: () => {},
+  isQuoteModalOpen: false,
+  openQuoteModal: () => {},
+  closeQuoteModal: () => {},
+  activeLead: null,
+  submitLead: () => {},
+  closeLeadCard: () => {},
+  initialServiceForQuote: "",
+};
+
 export function useSiteModals() {
   const context = useContext(ModalContext);
   if (!context) {
-    throw new Error("useSiteModals must be used within a ModalProvider");
+    return defaultModalContext;
   }
   return context;
 }

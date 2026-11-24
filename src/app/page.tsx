@@ -1,231 +1,369 @@
-"use client";
-
-import React from "react";
+import type { Metadata } from "next";
+import Link from "next/link";
 import {
-  ArrowRight,
-  Clock,
-  ShieldCheck,
-  Zap,
-  CheckCircle2,
-} from "lucide-react";
-import { useSiteModals } from "@/context/ModalContext";
-import CostSavingsCalculator from "@/components/CostSavingsCalculator";
-import OfferBento from "@/components/OfferBento";
-import AboutSection from "@/components/AboutSection";
-import FAQAccordion from "@/components/FAQAccordion";
-import { AnimatedShinyButton } from "@/components/eldoraui/animated-shiny-button";
-import SpecularButton from "@/components/ui/SpecularButton";
+  BRAND_NAME,
+  TAGLINE,
+  SUPPORTING_LINE,
+  CTA_LABELS,
+  HOW_IT_WORKS_STEPS,
+  INDUSTRIES,
+  FAQ_ITEMS,
+  TESTIMONIAL_BANNERS,
+  filterApprovedTestimonials,
+  SEO_METADATA,
+} from "@/content";
+import { TrustStrip } from "@/components/TrustStrip";
+import { SuccessStoryBanner } from "@/components/SuccessStoryBanner";
+import { FAQAccordion } from "@/components/FAQAccordion";
+import { IndustryCard } from "@/components/IndustryCard";
+
+export const metadata: Metadata = {
+  title: { absolute: SEO_METADATA.home.title },
+  description: SEO_METADATA.home.description,
+  alternates: {
+    canonical: SEO_METADATA.home.canonical,
+  },
+  openGraph: {
+    title: SEO_METADATA.home.title,
+    description: SEO_METADATA.home.description,
+    url: SEO_METADATA.home.canonical,
+    siteName: BRAND_NAME,
+    type: "website",
+  },
+};
 
 export default function HomePage() {
-  const { openSchedule, openQuoteModal } = useSiteModals();
+  const approvedTestimonials = filterApprovedTestimonials(TESTIMONIAL_BANNERS);
+  const homeFaqs = FAQ_ITEMS.slice(0, 6);
+
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: homeFaqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  };
 
   return (
-    <div className="relative w-full overflow-hidden bg-transparent text-white selection:bg-white selection:text-black">
-      {/* =========================================================================
-          HERO SECTION (CLEAN LEFT-DOCKED COPY ON PURE BLACK WITH MAGIC UI PARTICLES)
-          ========================================================================= */}
+    <main className="min-h-screen bg-white text-slate">
+      {/* FAQPage Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
+
+      {/* 1. Hero Section */}
       <section
-        id="top"
-        className="relative pt-6 sm:pt-10 pb-12 sm:pb-16 px-6 sm:px-10 lg:px-12 max-w-7xl mx-auto flex flex-col justify-center min-h-[calc(80dvh-80px)]"
+        data-section="hero"
+        id="hero"
+        className="bg-ink text-white py-20 px-6 md:px-12 text-center relative overflow-hidden"
       >
-        <div className="w-full flex justify-start">
-          <div className="w-full max-w-2xl text-left flex flex-col items-start z-10">
-            {/* Main Headline (Clean, Razor-Sharp High-Contrast Typography) */}
-            <h1 className="font-sans text-[36px] sm:text-[48px] lg:text-[58px] font-medium leading-[1.08] tracking-[-0.035em] text-white [text-wrap:balance]">
-              Deploy{" "}
-              <span className="font-voice-agent font-normal text-[1.12em] tracking-normal text-white pr-1">
-                AI call agents
-              </span>{" "}
-              that
-              <br />
-              answer every lead in seconds.
-            </h1>
-
-            {/* Subhead Lede */}
-            <p className="mt-4 max-w-[48ch] text-[16px] sm:text-[17px] leading-relaxed text-muted">
-              Voice receptionists that answer every phone call, qualify caller intent, and book revenue onto your calendar 24/7. Zero hold times. Zero missed calls.
-            </p>
-
-            {/* Clean 2-Button CTAs: Specular Button with dynamic rim light */}
-            <div className="mt-8 flex flex-wrap items-center gap-3.5">
-              <SpecularButton
-                size="lg"
-                radius={18}
-                tint="#ffffff"
-                tintOpacity={0.04}
-                textColor="#f5f5f5"
-                lineColor="#ffffff"
-                baseColor="#525252"
-                intensity={1}
-                idleIntensity={0.35}
-                shineSize={10}
-                shineFade={34}
-                thickness={1.2}
-                glow={1}
-                followMouse={true}
-                proximity={250}
-                onClick={() => openQuoteModal()}
-              >
-                Get a Quote
-              </SpecularButton>
-
-              <button
-                onClick={openSchedule}
-                className="btn btn-ghost h-[44px] px-6 text-sm font-medium text-white/90 hover:text-white"
-              >
-                <span>Book a Call</span>
-              </button>
-            </div>
-
-            {/* Trust Assurance Bar */}
-            <div className="mt-10 pt-6 border-t border-white/10 flex flex-wrap items-center gap-y-3 gap-x-6 text-xs text-muted">
-              <div className="flex items-center gap-2 text-white/90">
-                <CheckCircle2 className="w-4 h-4 text-white/80 shrink-0" />
-                <span>Keep your current phone number</span>
-              </div>
-              <div className="flex items-center gap-2 text-white/90">
-                <CheckCircle2 className="w-4 h-4 text-white/80 shrink-0" />
-                <span>Live in 3 to 7 business days</span>
-              </div>
-              <div className="flex items-center gap-2 text-white/90">
-                <CheckCircle2 className="w-4 h-4 text-white/80 shrink-0" />
-                <span>100% direct engineering</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* =========================================================================
-          KEY TELEMETRY / 3-STAT METRICS BAR
-          ========================================================================= */}
-      <section className="relative z-10 stats-grid border-y border-white/10 bg-black/80 backdrop-blur-xl">
-        {/* Stat 1: 24/7 Coverage */}
-        <div className="stat-item">
-          <div className="stat-icon" aria-hidden="true">
-            <Clock className="w-4 h-4 text-white" />
-          </div>
-          <div>
-            <div className="stat-title">24/7 Phone Answering</div>
-            <p className="stat-desc">
-              Human-grade AI answering after-hours, weekends, and overflow calls. Zero voicemail.
-            </p>
-          </div>
-        </div>
-
-        {/* Stat 2: Speed-to-lead */}
-        <div className="stat-item">
-          <div className="stat-icon" aria-hidden="true">
-            <Zap className="w-4 h-4 text-white" />
-          </div>
-          <div>
-            <div className="stat-title">&lt;60s Speed-to-Lead</div>
-            <p className="stat-desc">
-              Calls and texts inbound form leads in under 60 seconds before competitors respond.
-            </p>
-          </div>
-        </div>
-
-        {/* Stat 3: 0s Hold time */}
-        <div className="stat-item">
-          <div className="stat-icon" aria-hidden="true">
-            <ShieldCheck className="w-4 h-4 text-white" />
-          </div>
-          <div>
-            <div className="stat-title">Live CRM Booking</div>
-            <p className="stat-desc">
-              Books qualified appointments directly into your CRM or team calendar with instant SMS confirmation.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* =========================================================================
-          THE INTERACTIVE COST SAVINGS & LOST REVENUE CALCULATOR
-          ========================================================================= */}
-      <CostSavingsCalculator />
-
-      {/* =========================================================================
-          THE 3 CORE SYSTEMS (AI RECEPTIONIST, SPEED-TO-LEAD AGENT, WEB BUILD & REDESIGN)
-          ========================================================================= */}
-      <OfferBento />
-
-      {/* =========================================================================
-          ABOUT US & THE NAFA STANDARD
-          ========================================================================= */}
-      <AboutSection />
-
-      {/* =========================================================================
-          INTERACTIVE FAQ ACCORDION
-          ========================================================================= */}
-      <FAQAccordion />
-
-      {/* =========================================================================
-          FINAL HIGH-CONVERTING CLOSING CTA BANNER
-          ========================================================================= */}
-      <section className="relative py-14 sm:py-20 px-6 sm:px-10 lg:px-12 max-w-7xl mx-auto">
-        <div className="rounded-xl border border-white/20 bg-gradient-to-b from-white/[0.08] via-black/90 to-black p-8 sm:p-12 lg:p-14 text-center relative overflow-hidden shadow-2xl">
-          {/* Subtle top edge glow */}
-          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent" />
-
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium tracking-[-0.03em] text-white leading-[1.1] max-w-3xl mx-auto [text-wrap:balance]">
-            Ready to deploy an AI voice receptionist that never sleeps?
-          </h2>
-
-          <p className="mt-3 text-[15px] sm:text-[16px] text-muted max-w-[50ch] mx-auto leading-relaxed">
-            Book a 15-minute call to calculate your revenue at risk and test a live custom voice agent on your phone.
+        <div className="max-w-[1200px] mx-auto flex flex-col items-center">
+          <span className="text-xs uppercase tracking-[0.08em] text-sky mb-4">
+            Healthcare Staffing Simplified — Dedicated Extension of Your Practice
+          </span>
+          <h1 className="font-serif text-[40px] md:text-[72px] leading-[1.05] tracking-[-0.02em] max-w-4xl font-normal text-white mb-6">
+            {TAGLINE}
+          </h1>
+          <p className="text-lg md:text-xl text-slate-300 max-w-2xl mb-8 leading-relaxed">
+            {SUPPORTING_LINE}
           </p>
-
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-            <SpecularButton
-              onClick={() => openQuoteModal()}
-              size="md"
-              radius={10}
-              tint="#ffffff"
-              tintOpacity={0.06}
-              blur={12}
-              textColor="#ffffff"
-              lineColor="#ffffff"
-              baseColor="#525252"
-              intensity={1.2}
-              idleIntensity={0.4}
-              shineSize={14}
-              shineFade={36}
-              thickness={1.4}
-              glow={1.2}
-              followMouse={true}
-              autoAnimate={true}
-              speed={0.4}
-              proximity={260}
-              className="h-[46px] px-8 text-sm font-semibold shadow-xl"
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <Link
+              href="/book-a-call"
+              className="inline-flex items-center justify-center font-medium px-6 py-3 rounded-[2px] bg-white text-ink hover:bg-mist transition-colors shadow-sm"
             >
-              Get a Quote
-            </SpecularButton>
-
-            <button
-              onClick={openSchedule}
-              className="btn btn-ghost h-[44px] px-7 text-sm font-medium text-white"
+              {CTA_LABELS.primary}
+            </Link>
+            <Link
+              href="/services"
+              className="inline-flex items-center justify-center font-medium px-6 py-3 rounded-[2px] bg-white/10 text-white border border-white/20 hover:bg-white/20 transition-colors"
             >
-              <span>Book a Call</span>
-            </button>
-          </div>
-
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-6 text-xs text-muted">
-            <span className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-3.5 h-3.5 text-white/80" />
-              No long-term contracts
-            </span>
-            <span className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-3.5 h-3.5 text-white/80" />
-              Keep your numbers
-            </span>
-            <span className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-3.5 h-3.5 text-white/80" />
-              Live in 3 to 7 business days
-            </span>
+              {CTA_LABELS.secondaryServices}
+            </Link>
           </div>
         </div>
       </section>
-    </div>
+
+      {/* 2. Trust Strip */}
+      <section data-section="trust-strip" id="trust-strip">
+        <TrustStrip variant="light" showProofPoints={true} showLogos={true} />
+      </section>
+
+      {/* 3. Services Overview */}
+      <section
+        data-section="services-overview"
+        id="services-overview"
+        className="py-20 px-6 md:px-12 max-w-[1200px] mx-auto"
+      >
+        <div className="text-center mb-12">
+          <span className="text-xs uppercase tracking-[0.08em] text-slate/80 font-medium">
+            Dedicated Healthcare Roles
+          </span>
+          <h2 className="font-serif text-[32px] md:text-[48px] text-charcoal mt-2">
+            Specialized Staffing for Every Workflow
+          </h2>
+          <p className="text-slate max-w-2xl mx-auto mt-4 text-base">
+            From patient intake to medical billing and compliance, our trained remote professionals integrate directly into your EHR and daily practice systems.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="p-8 border border-line rounded-[2px] bg-white flex flex-col justify-between">
+            <div>
+              <span className="text-xs text-navy uppercase tracking-wider font-medium">Category 1</span>
+              <h3 className="text-xl font-medium text-charcoal mt-2">Admin and Executive</h3>
+              <p className="text-sm text-slate mt-3 leading-relaxed">
+                Front desk coordination, appointment scheduling, patient intake, and clinical medical assistants providing seamless support.
+              </p>
+            </div>
+            <div className="mt-6 pt-6 border-t border-line">
+              <Link
+                href="/services#admin-and-executive"
+                className="text-xs text-navy font-medium hover:underline inline-flex items-center gap-1"
+              >
+                Explore Admin & Clinical Roles &rarr;
+              </Link>
+            </div>
+          </div>
+
+          <div className="p-8 border border-line rounded-[2px] bg-white flex flex-col justify-between">
+            <div>
+              <span className="text-xs text-navy uppercase tracking-wider font-medium">Category 2</span>
+              <h3 className="text-xl font-medium text-charcoal mt-2">Revenue Cycle and Compliance</h3>
+              <p className="text-sm text-slate mt-3 leading-relaxed">
+                Expert medical billers, certified professional coders, full RCM managers, and provider credentialing specialists.
+              </p>
+            </div>
+            <div className="mt-6 pt-6 border-t border-line">
+              <Link
+                href="/services#revenue-cycle-and-compliance"
+                className="text-xs text-navy font-medium hover:underline inline-flex items-center gap-1"
+              >
+                Explore Revenue Cycle Roles &rarr;
+              </Link>
+            </div>
+          </div>
+
+          <div className="p-8 border border-line rounded-[2px] bg-white flex flex-col justify-between">
+            <div>
+              <span className="text-xs text-navy uppercase tracking-wider font-medium">Category 3</span>
+              <h3 className="text-xl font-medium text-charcoal mt-2">Extended and Creative</h3>
+              <p className="text-sm text-slate mt-3 leading-relaxed">
+                24/7 after-hours call answering, urgent clinical triage routing, and dedicated graphic design for clinic marketing.
+              </p>
+            </div>
+            <div className="mt-6 pt-6 border-t border-line">
+              <Link
+                href="/services#extended-and-creative"
+                className="text-xs text-navy font-medium hover:underline inline-flex items-center gap-1"
+              >
+                Explore Extended & Creative Roles &rarr;
+              </Link>
+            </div>
+          </div>
+        </div>
+        <div className="text-center mt-10">
+          <Link
+            href="/services"
+            className="inline-flex items-center justify-center font-medium px-6 py-3 rounded-[2px] bg-charcoal text-white hover:bg-ink transition-colors text-sm"
+          >
+            {CTA_LABELS.secondaryServices}
+          </Link>
+        </div>
+      </section>
+
+      {/* 4. How It Works */}
+      <section
+        data-section="how-it-works"
+        id="how-it-works"
+        className="py-20 px-6 md:px-12 bg-mist border-y border-line"
+      >
+        <div className="max-w-[1200px] mx-auto">
+          <div className="text-center mb-12">
+            <span className="text-xs uppercase tracking-[0.08em] text-slate/80 font-medium">
+              Streamlined Process
+            </span>
+            <h2 className="font-serif text-[32px] md:text-[48px] text-charcoal mt-2">
+              How It Works
+            </h2>
+            <p className="text-slate max-w-2xl mx-auto mt-4 text-base">
+              From discovery consultation to candidate matching, signed BAA, and ongoing proactive support.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            {HOW_IT_WORKS_STEPS.map((step) => (
+              <div
+                key={step.step}
+                className="p-5 bg-white border border-line rounded-[2px] flex flex-col justify-between"
+              >
+                <div>
+                  <span className="text-xs font-mono font-bold text-navy">Step 0{step.step}</span>
+                  <h3 className="text-sm font-semibold text-charcoal mt-2">{step.title}</h3>
+                  <p className="text-xs text-slate mt-2 leading-relaxed">{step.subtitle}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="text-center mt-10">
+            <Link
+              href="/how-it-works"
+              className="inline-flex items-center justify-center font-medium px-6 py-3 rounded-[2px] bg-charcoal text-white hover:bg-ink transition-colors text-sm"
+            >
+              Learn More About Our Process
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. Savings Calculator Teaser */}
+      <section
+        data-section="savings-calculator"
+        id="savings-calculator"
+        className="py-20 px-6 md:px-12 max-w-[1200px] mx-auto"
+      >
+        <div className="border border-line rounded-[2px] p-8 md:p-12 bg-white text-center">
+          <span className="text-xs uppercase tracking-[0.08em] text-slate/80 font-medium">
+            Interactive Cost Analysis
+          </span>
+          <h2 className="font-serif text-[32px] md:text-[48px] text-charcoal mt-2">
+            Staffing Savings Calculator
+          </h2>
+          <p className="text-slate max-w-2xl mx-auto mt-4 text-base leading-relaxed">
+            Calculate how much your healthcare practice can save by transitioning administrative and revenue cycle roles to trained remote professionals. Most practices achieve 50-60% typical savings compared to local hiring overhead.
+          </p>
+          <div className="mt-8 flex flex-wrap justify-center gap-4">
+            <Link
+              href="/savings-calculator"
+              className="inline-flex items-center justify-center font-medium px-6 py-3 rounded-[2px] bg-charcoal text-white hover:bg-ink transition-colors text-sm"
+            >
+              {CTA_LABELS.secondaryCalculator}
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 6. Industries */}
+      <section
+        data-section="industries"
+        id="industries"
+        className="py-20 px-6 md:px-12 bg-mist border-y border-line"
+      >
+        <div className="max-w-[1200px] mx-auto">
+          <div className="text-center mb-12">
+            <span className="text-xs uppercase tracking-[0.08em] text-slate/80 font-medium">
+              Healthcare Verticals
+            </span>
+            <h2 className="font-serif text-[32px] md:text-[48px] text-charcoal mt-2">
+              Industries We Serve
+            </h2>
+            <p className="text-slate max-w-2xl mx-auto mt-4 text-base">
+              Tailored staffing solutions designed around the specific workflows, compliance demands, and software platforms of medical and dental practices.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {INDUSTRIES.map((industry) => (
+              <IndustryCard key={industry.id} industry={industry} variant="card" />
+            ))}
+          </div>
+          <div className="text-center mt-10">
+            <Link
+              href="/industries"
+              className="inline-flex items-center justify-center font-medium px-6 py-3 rounded-[2px] bg-charcoal text-white hover:bg-ink transition-colors text-sm"
+            >
+              View All Industries
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 7. Success Stories */}
+      <section
+        data-section="success-stories"
+        id="success-stories"
+        className="py-20 px-6 md:px-12 max-w-[1200px] mx-auto"
+      >
+        <div className="text-center mb-12">
+          <span className="text-xs uppercase tracking-[0.08em] text-slate/80 font-medium">
+            Client Proof
+          </span>
+          <h2 className="font-serif text-[32px] md:text-[48px] text-charcoal mt-2">
+            Client Success Stories
+          </h2>
+          <p className="text-slate max-w-2xl mx-auto mt-4 text-base">
+            See how US practices eliminate phone bottlenecks, reduce overhead, and scale operations with RepHero.
+          </p>
+        </div>
+        {approvedTestimonials.length > 0 && (
+          <div className="flex justify-center">
+            <SuccessStoryBanner testimonial={approvedTestimonials[0]} />
+          </div>
+        )}
+        <div className="text-center mt-8">
+          <Link
+            href="/success-stories"
+            className="inline-flex items-center justify-center font-medium px-6 py-3 rounded-[2px] bg-charcoal text-white hover:bg-ink transition-colors text-sm"
+          >
+            Read More Success Stories
+          </Link>
+        </div>
+      </section>
+
+      {/* 8. FAQ */}
+      <section
+        data-section="faq"
+        id="faq"
+        className="py-20 px-6 md:px-12 bg-mist border-t border-line"
+      >
+        <div className="max-w-[800px] mx-auto">
+          <div className="text-center mb-12">
+            <span className="text-xs uppercase tracking-[0.08em] text-slate/80 font-medium">
+              Common Inquiries
+            </span>
+            <h2 className="font-serif text-[32px] md:text-[48px] text-charcoal mt-2">
+              Frequently Asked Questions
+            </h2>
+            <p className="text-slate max-w-xl mx-auto mt-4 text-base">
+              Clear answers regarding HIPAA compliance, onboarding timelines, and flat monthly pricing.
+            </p>
+          </div>
+          <FAQAccordion items={homeFaqs} allowMultiple={false} />
+        </div>
+      </section>
+
+      {/* 9. Final CTA */}
+      <section
+        data-section="cta"
+        id="cta"
+        className="py-20 px-6 md:px-12 bg-ink text-white text-center"
+      >
+        <div className="max-w-[800px] mx-auto">
+          <h2 className="font-serif text-[36px] md:text-[52px] leading-tight mb-6">
+            Ready to Give Your Practice Its Time Back?
+          </h2>
+          <p className="text-lg text-slate-300 max-w-xl mx-auto mb-8">
+            Schedule a focused 15-minute consultation to evaluate your practice workflows and review candidate profiles.
+          </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <Link
+              href="/book-a-call"
+              className="inline-flex items-center justify-center font-medium px-6 py-3 rounded-[2px] bg-white text-ink hover:bg-mist transition-colors shadow-sm"
+            >
+              {CTA_LABELS.primary}
+            </Link>
+            <Link
+              href="/services"
+              className="inline-flex items-center justify-center font-medium px-6 py-3 rounded-[2px] bg-white/10 text-white border border-white/20 hover:bg-white/20 transition-colors"
+            >
+              {CTA_LABELS.secondaryServices}
+            </Link>
+          </div>
+        </div>
+      </section>
+    </main>
   );
 }
