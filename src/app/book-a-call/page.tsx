@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import React, { Suspense } from "react";
 // Booking form uses useSearchParams() inside <Suspense> for query hydration and redirects to /thank-you
 import { BookCallForm } from "@/components/BookCallForm";
+import { RevealSection } from "@/components/Motion";
 import {
   BRAND_NAME,
   DISCOVERY_CALL_LENGTH_MINUTES,
@@ -30,7 +31,7 @@ export default function BookCallPage() {
     <main className="min-h-screen bg-white text-slate py-16 px-6 md:px-12">
       <div className="max-w-[1200px] mx-auto">
         {/* Section 1: Header */}
-        <section
+        <RevealSection
           data-section="header"
           id="header"
           className="text-center max-w-3xl mx-auto mb-12"
@@ -44,10 +45,10 @@ export default function BookCallPage() {
           <p className="text-base md:text-lg text-slate leading-relaxed">
             Schedule a focused 15-minute consultation with a RepHero healthcare staffing specialist.
           </p>
-        </section>
+        </RevealSection>
 
         {/* Section 2: Booking Form */}
-        <section
+        <RevealSection
           data-section="booking-form"
           id="booking-form"
           className="max-w-2xl mx-auto mb-12"
@@ -61,10 +62,10 @@ export default function BookCallPage() {
           >
             <BookCallForm showSchedulingSlot={false} />
           </Suspense>
-        </section>
+        </RevealSection>
 
         {/* Section 3: Scheduling Slot */}
-        <section
+        <RevealSection
           data-section="scheduling-slot"
           id="scheduling-slot"
           className="max-w-2xl mx-auto mb-12"
@@ -84,10 +85,10 @@ export default function BookCallPage() {
               Prefer direct calendar booking? This integration slot connects with Calendly or Microsoft Bookings for immediate calendar confirmation.
             </p>
           </div>
-        </section>
+        </RevealSection>
 
         {/* Section 4: PHI Warning Notice */}
-        <section
+        <RevealSection
           data-section="phi-warning"
           id="phi-warning"
           className="max-w-2xl mx-auto mb-12"
@@ -99,10 +100,10 @@ export default function BookCallPage() {
             <p className="font-semibold mb-1">HIPAA & Privacy Notice</p>
             <p>{PHI_WARNING_NOTICE}</p>
           </div>
-        </section>
+        </RevealSection>
 
         {/* Section 5: Contact Details */}
-        <section
+        <RevealSection
           data-section="contact-details"
           id="contact-details"
           className="max-w-2xl mx-auto mb-12 grid grid-cols-1 sm:grid-cols-3 gap-4 text-center"
@@ -124,10 +125,10 @@ export default function BookCallPage() {
             <span className="text-xs uppercase text-slate font-medium block mb-1">Location</span>
             <span className="text-sm font-medium text-charcoal">{CONTACT_INFO.location}</span>
           </div>
-        </section>
+        </RevealSection>
 
         {/* Section 6: Next Steps */}
-        <section
+        <RevealSection
           data-section="next-steps"
           id="next-steps"
           className="max-w-3xl mx-auto text-center pt-10 border-t border-line"
@@ -158,7 +159,7 @@ export default function BookCallPage() {
               </p>
             </div>
           </div>
-        </section>
+        </RevealSection>
       </div>
     </main>
   );

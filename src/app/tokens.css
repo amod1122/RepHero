@@ -1,37 +1,85 @@
-/* RepHero Global Design Tokens */
 :root {
-  /* Brand Primitive Colors */
-  --color-ink: #090E12;
-  --color-navy: #0F3554;
-  --color-charcoal: #131D25;
-  --color-white: #FFFFFF;
-  --color-mist: #F7F8FA;
-  --color-sky: #C6DDF5;
-  --color-peach: #FFE3D1;
-  --color-slate: #4A5560;
-  --color-line: #E3E6EA;
+  color-scheme: light;
+  --space-3xs: 2px;
+  --space-2xs: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 40px;
+  --space-2xl: 64px;
+  --space-3xl: 96px;
+  --space-4xl: 144px;
 
-  /* Semantic Variables */
-  --bg-dark: var(--color-ink);
-  --bg-dark-glow: var(--color-navy);
-  --bg-light: var(--color-white);
-  --bg-surface: var(--color-mist);
-  --text-dark: var(--color-charcoal);
-  --text-body: var(--color-slate);
-  --text-light: var(--color-white);
-  --border-color: var(--color-line);
-  --accent-sky: var(--color-sky);
-  --accent-peach: var(--color-peach);
+  --text-xs: 0.8125rem;
+  --text-sm: 0.875rem;
+  --text-md: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 2rem;
+  --text-3xl: 2.75rem;
+  --text-display-s: 4rem;
+  --text-display: 6rem;
+  --text-section: 4.5rem;
+  --text-title: 2.25rem;
+  --text-lead: 1.25rem;
 
-  /* Functional / Form Validation Colors */
-  --color-success: #16A34A;
-  --color-error: #DC2626;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-micro: 100ms;
+  --dur-short: 180ms;
+  --dur-long: 320ms;
+  --dur-reveal: 420ms;
 
-  /* Radii */
-  --radius-button: 2px;
+  --container: 1440px;
+  --gutter: 64px;
+  --gap-columns: 32px;
+  --section-gap-s: 120px;
+  --section-gap: 144px;
+  --section-gap-l: 176px;
+
+  --z-base: 1;
+  --z-raised: 10;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-sticky-nav: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+  --z-tooltip: 600;
+
+  --color-paper: #ffffff;
+  --color-paper-2: #f6f8fb;
+  --color-paper-3: #eaf0f7;
+  --color-paper-4: #dce6f2;
+  --color-ink: #050a14;
+  --color-ink-2: #27344a;
+  --color-muted: #667085;
+  --color-rule: #dce3ec;
+  --color-rule-2: #b9c5d4;
+  --color-navy: #030816;
+  --color-navy-2: #071a36;
+  --color-navy-3: #0b2a52;
+  --color-blue: #4b9cff;
+  --color-blue-soft: #dbeaff;
+  --color-peach: #ffe6dd;
+  --color-blush: #f7dce8;
+  --color-accent: #1e6fff;
+  --color-accent-soft: #e7f0ff;
+  --color-accent-ink: #ffffff;
+  --color-live: #16a36a;
+  --color-focus: #1e6fff;
+  --color-error: #c83f49;
+  --color-success: #16875a;
+  --color-clear: #00000000;
+
+  --font-display: var(--font-cormorant), Georgia, serif;
+  --font-body: var(--font-dm-sans), Arial, sans-serif;
+  --font-outlier: var(--font-dm-sans), Arial, sans-serif;
   --radius-card: 2px;
-  --radius-input: 2px;
-
-  /* Max Content Width */
-  --max-content-width: 1200px;
+  --radius-pill: 2px;
+  --rule-hair: 1px;
+  --shadow-card: 0 28px 72px -42px rgba(3, 8, 22, 0.52);
+  --tracking-display: 0;
+  --display-weight: 400;
 }

@@ -1,40 +1,37 @@
-# Nafa Design System
+# RepHero Design
 
-<!-- impeccable:design-schema 1 -->
+## Visual Direction
 
-## Visual World
+The RepHero site uses an editorial, high-contrast visual language inspired by the attached reference site: near-black navy, cobalt light, generous white space, and restrained typography. The homepage hero is a full-bleed WebGL Beams canvas with the message set directly over the light. Product information sits in a bright white body with thin rules, large serif headings, and minimal interface chrome.
 
-**Night-shift signal field.** Nafa is the reliable system working while a business owner is busy, asleep, or with a customer. The site reads like a calm night operations field: dark, quiet, precise, and lit by a distant warm signal rather than busy dashboard decoration.
+## Colors
 
-## Direction Contract
-
-- **Mode:** Persuade.
-- **Audience scene:** a local-business owner assessing whether their lead flow is covered after hours or during field work.
-- **Signature:** a perspective grid that arcs gently toward the horizon and dissolves at the page edges. It is a direct response to the user-supplied reference and conveys constant coverage without becoming a generic sci-fi backdrop.
-- **Composition:** generous open sections; restrained panels only when a boundary or interactive task needs one; service and proof content use rules, columns, and rhythm before cards.
-- **Expression:** calm authority, clear white type, warm signal-gold actions, and emerald only for a confirmed/handled state.
-
-## Tokens
-
-| Role | Value | Use |
-| --- | --- | --- |
-| Ink | `#050A12` | page ground |
-| Deep surface | `#0B1320` | elevated functional surfaces |
-| Raised surface | `#111D2E` | inputs and focused information |
-| Content | `#F4F7FB` | headings and primary copy |
-| Muted | `#A6B4C7` | secondary copy |
-| Signal | `#F2B84B` | primary action and key emphasis |
-| Handled | `#63D6A3` | confirmed status only |
-| Rule | `rgba(194, 213, 239, 0.15)` | hairline separation |
+| Role | Value |
+| --- | --- |
+| Deep navy | `#030816` |
+| Navy | `#071A36` |
+| Cobalt | `#4B9CFF` |
+| Ink | `#050A14` |
+| White | `#FFFFFF` |
+| Ice | `#F6F8FB` |
+| Pale blue | `#DBEAFF` |
+| Blush | `#F7DCE8` |
+| Peach | `#FFE6DD` |
+| Slate | `#667085` |
+| Rule | `#DCE3EC` |
 
 ## Typography
 
-Space Grotesk carries display and navigation; Manrope carries body copy. Headings use tight but legible tracking, high contrast, and clear size steps. Body copy stays comfortably readable with a 65-75 character measure.
+Cormorant Garamond is the display face for editorial headlines and large figures. DM Sans is used for navigation, body copy, labels, forms, and controls. Letter spacing remains neutral.
 
-## Interaction
+## Layout
 
-One authored ambience: the signal field breathes almost imperceptibly. Controls use short, direct hover and press feedback. Motion is removed for users who request reduced motion.
+The desktop container is 1440px with 64px gutters. The hero is full-bleed and approximately one viewport tall. Editorial sections use asymmetrical 12-column grids, full-width rules, and generous vertical spacing. Mobile layouts collapse to one column with 16px gutters.
 
-## Restraint
+## Motion
 
-No decorative badge above section headings, no gradient text, no repeated icon tiles, no nested cards, no fabricated proof, and no competing primary CTAs.
+The hero Beams canvas runs its authored intro and responds to pointer movement. Scroll entrances use restrained, critically damped springs with no bounce. Motion is reduced when `prefers-reduced-motion` is active. Material transparency is removed when `prefers-reduced-transparency` is active.
+
+## Interaction and Accessibility
+
+Controls have visible keyboard focus. Interactive targets are at least 44px tall. FAQ and calculator behavior remains available without animation, and booking forms continue to warn visitors not to submit protected health information.

@@ -11,6 +11,7 @@ import {
   SEO_METADATA,
 } from "@/content";
 import { PlaceholderBadge } from "@/components/PlaceholderBadge";
+import { RevealSection } from "@/components/Motion";
 
 export const metadata: Metadata = {
   title: { absolute: SEO_METADATA.about.title },
@@ -31,7 +32,7 @@ export default function AboutPage() {
   return (
     <main className="min-h-screen bg-white text-slate">
       {/* 1. Header Section */}
-      <section
+      <RevealSection
         data-section="header"
         id="header"
         className="py-16 md:py-20 px-6 md:px-12 text-center bg-mist border-b border-line"
@@ -47,10 +48,10 @@ export default function AboutPage() {
             {ABOUT_HEADER.description}
           </p>
         </div>
-      </section>
+      </RevealSection>
 
       {/* 2. Story Section */}
-      <section
+      <RevealSection
         data-section="story"
         id="story"
         className="py-16 px-6 md:px-12 max-w-[900px] mx-auto"
@@ -71,10 +72,10 @@ export default function AboutPage() {
             ))}
           </div>
         </div>
-      </section>
+      </RevealSection>
 
       {/* 3. How We Work Section */}
-      <section
+      <RevealSection
         data-section="how-we-work"
         id="how-we-work"
         className="py-16 px-6 md:px-12 bg-mist border-y border-line"
@@ -109,10 +110,10 @@ export default function AboutPage() {
             ))}
           </div>
         </div>
-      </section>
+      </RevealSection>
 
       {/* 4. Core Values Section */}
-      <section
+      <RevealSection
         data-section="values"
         id="values"
         className="py-16 px-6 md:px-12 max-w-[1200px] mx-auto"
@@ -143,10 +144,10 @@ export default function AboutPage() {
             </div>
           ))}
         </div>
-      </section>
+      </RevealSection>
 
       {/* 5. Leadership Section */}
-      <section
+      <RevealSection
         data-section="leadership"
         id="leadership"
         className="py-16 px-6 md:px-12 bg-mist border-t border-line"
@@ -173,10 +174,10 @@ export default function AboutPage() {
             />
           </div>
         </div>
-      </section>
+      </RevealSection>
 
       {/* 6. Closing CTA */}
-      <section
+      <RevealSection
         data-section="cta"
         id="cta"
         className="py-20 px-6 md:px-12 bg-ink text-white text-center"
@@ -203,7 +204,7 @@ export default function AboutPage() {
             </Link>
           </div>
         </div>
-      </section>
+      </RevealSection>
     </main>
   );
 }

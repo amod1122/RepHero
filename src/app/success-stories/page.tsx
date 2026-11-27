@@ -10,6 +10,7 @@ import {
   filterApprovedTestimonials,
 } from "@/content";
 import { SuccessStoryBanner } from "@/components/SuccessStoryBanner";
+import { RevealSection } from "@/components/Motion";
 
 export const metadata: Metadata = {
   title: { absolute: SEO_METADATA.successStories.title },
@@ -32,7 +33,7 @@ export default function SuccessStoriesPage() {
   return (
     <main className="min-h-screen bg-white text-slate">
       {/* 1. Header Section */}
-      <section
+      <RevealSection
         data-section="header"
         id="header"
         className="py-16 md:py-20 px-6 md:px-12 text-center bg-mist border-b border-line"
@@ -48,10 +49,10 @@ export default function SuccessStoriesPage() {
             {SUCCESS_STORIES_HEADER.description}
           </p>
         </div>
-      </section>
+      </RevealSection>
 
       {/* 2. Banner Container (Flag-Filtered: only approved items render) */}
-      <section
+      <RevealSection
         data-section="banner-container"
         id="banner-container"
         className="py-16 px-6 md:px-12 max-w-[1200px] mx-auto space-y-12"
@@ -69,10 +70,10 @@ export default function SuccessStoriesPage() {
             </p>
           </div>
         )}
-      </section>
+      </RevealSection>
 
       {/* 3. Results Strip */}
-      <section
+      <RevealSection
         data-section="results-strip"
         id="results-strip"
         className="py-16 px-6 md:px-12 bg-mist border-y border-line"
@@ -94,10 +95,10 @@ export default function SuccessStoriesPage() {
             ))}
           </div>
         </div>
-      </section>
+      </RevealSection>
 
       {/* 4. Closing CTA */}
-      <section
+      <RevealSection
         data-section="cta"
         id="cta"
         className="py-20 px-6 md:px-12 bg-ink text-white text-center"
@@ -124,7 +125,7 @@ export default function SuccessStoriesPage() {
             </Link>
           </div>
         </div>
-      </section>
+      </RevealSection>
     </main>
   );
 }

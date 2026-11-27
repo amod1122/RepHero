@@ -5,7 +5,8 @@ export const HEADER_NAV_LINKS: NavigationItem[] = [
   { label: "Industries", href: "/industries" },
   { label: "How It Works", href: "/how-it-works" },
   { label: "Success Stories", href: "/success-stories" },
-  { label: "Savings Calculator", href: "/savings-calculator" },
+  { label: "Savings Calculator", href: "/#savings-calculator" },
+  { label: "Our Team", href: "/our-team" },
   { label: "About", href: "/about" },
 ];
 
@@ -20,9 +21,10 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
     title: "Company",
     links: [
       { label: "About", href: "/about" },
+      { label: "Our Team", href: "/our-team" },
       { label: "Success Stories", href: "/success-stories" },
       { label: "How It Works", href: "/how-it-works" },
-      { label: "Savings Calculator", href: "/savings-calculator" },
+      { label: "Savings Calculator", href: "/#savings-calculator" },
     ],
   },
   {

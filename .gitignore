@@ -27,6 +27,10 @@ yarn-error.log*
 .hallmark/
 scratch/
 
+# local agent/runtime artifacts
+/.t3/
+/.pi/
+
 # local env files
 .env*.local
 .env

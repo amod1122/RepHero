@@ -10,5 +10,6 @@ export * from './faq';
 export * from './legal';
 export * from './placeholders';
 export * from './about';
+export * from './team';
 export * from './seo';
 

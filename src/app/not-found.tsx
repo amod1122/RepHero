@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CTA_LABELS } from "@/content";
+import { RevealSection } from "@/components/Motion";
 
 export default function NotFound() {
   return (
@@ -11,7 +12,7 @@ export default function NotFound() {
       />
       <div className="max-w-md w-full mx-auto text-center border border-line rounded-[2px] p-8 md:p-10 bg-white shadow-sm">
         {/* 1. Error Message Section */}
-        <section data-section="error-message" id="error-message" className="mb-8">
+        <RevealSection data-section="error-message" id="error-message" className="mb-8">
           <span className="font-serif text-5xl text-charcoal font-normal block mb-2">
             404
           </span>
@@ -21,10 +22,10 @@ export default function NotFound() {
           <p className="text-sm text-slate leading-relaxed">
             The page you are looking for does not exist or has been moved. Explore our remote healthcare staffing services below.
           </p>
-        </section>
+        </RevealSection>
 
         {/* 2. Recovery Links Section */}
-        <section data-section="recovery-links" id="recovery-links" className="space-y-3">
+        <RevealSection data-section="recovery-links" id="recovery-links" className="space-y-3">
           <Link
             href="/"
             className="w-full inline-flex items-center justify-center font-medium text-sm px-5 py-2.5 rounded-[2px] bg-charcoal text-white hover:bg-ink transition-colors shadow-sm"
@@ -43,7 +44,7 @@ export default function NotFound() {
           >
             {CTA_LABELS.primary}
           </Link>
-        </section>
+        </RevealSection>
       </div>
     </main>
   );

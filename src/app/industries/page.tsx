@@ -7,6 +7,7 @@ import {
   SEO_METADATA,
 } from "@/content";
 import { IndustryCard } from "@/components/IndustryCard";
+import { RevealSection } from "@/components/Motion";
 
 export const metadata: Metadata = {
   title: { absolute: SEO_METADATA.industries.title },
@@ -36,7 +37,7 @@ export default function IndustriesPage() {
   return (
     <main className="min-h-screen bg-white text-slate">
       {/* 1. Header Section */}
-      <section
+      <RevealSection
         data-section="header"
         id="header"
         className="py-16 md:py-20 px-6 md:px-12 text-center bg-mist border-b border-line"
@@ -52,10 +53,10 @@ export default function IndustriesPage() {
             Every healthcare specialty faces unique administrative, clinical, and billing workflows. RepHero provides specialized remote professionals trained in your specific field.
           </p>
         </div>
-      </section>
+      </RevealSection>
 
       {/* 2. Anchor Jump Navigation */}
-      <section
+      <RevealSection
         data-section="anchor-nav"
         id="anchor-nav"
         className="sticky top-[73px] z-20 bg-white/95 backdrop-blur-sm border-b border-line py-4 px-6 md:px-12"
@@ -71,10 +72,10 @@ export default function IndustriesPage() {
             </a>
           ))}
         </div>
-      </section>
+      </RevealSection>
 
       {/* 3. Industry Sections */}
-      <section
+      <RevealSection
         data-section="industry-sections"
         id="industry-sections"
         className="py-12 px-6 md:px-12 max-w-[1200px] mx-auto space-y-16"
@@ -88,10 +89,10 @@ export default function IndustriesPage() {
             <IndustryCard industry={industry} variant="section" />
           </div>
         ))}
-      </section>
+      </RevealSection>
 
       {/* 4. Closing CTA */}
-      <section
+      <RevealSection
         data-section="cta"
         id="cta"
         className="py-20 px-6 md:px-12 bg-ink text-white text-center"
@@ -118,7 +119,7 @@ export default function IndustriesPage() {
             </Link>
           </div>
         </div>
-      </section>
+      </RevealSection>
     </main>
   );
 }

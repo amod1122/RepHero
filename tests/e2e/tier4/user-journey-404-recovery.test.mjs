@@ -38,13 +38,14 @@ describe('Tier 4 Journey 5: Mobile Navigation & 404 Recovery Journey (Dr. Marcus
     assert.strictEqual(NAVIGATION.headerCta.href, '/book-a-call');
 
     // Verify navigation links for mobile drawer
-    assert.strictEqual(NAVIGATION.desktopLinks.length, 6, 'Must have 6 standard navigation links');
+    assert.strictEqual(NAVIGATION.desktopLinks.length, 7, 'Must have 7 standard navigation links');
     const expectedDrawerLabels = [
       'Services',
       'Industries',
       'How It Works',
       'Success Stories',
       'Savings Calculator',
+      'Our Team',
       'About'
     ];
     for (const label of expectedDrawerLabels) {

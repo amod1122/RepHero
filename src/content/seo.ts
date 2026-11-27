@@ -74,6 +74,15 @@ export const SEO_METADATA: Record<string, RouteSeoMetadata> = {
     changeFrequency: "monthly",
     inSitemap: true,
   },
+  ourTeam: {
+    path: "/our-team",
+    title: "Our Team | RepHero",
+    description: "Meet the RepHero team connecting healthcare practices with experienced remote professionals across operations, revenue cycle, and healthcare operations.",
+    canonical: "https://www.rephero.co/our-team/",
+    priority: 0.6,
+    changeFrequency: "monthly",
+    inSitemap: true,
+  },
   bookCall: {
     path: "/book-a-call",
     title: "Book a Discovery Call | RepHero",

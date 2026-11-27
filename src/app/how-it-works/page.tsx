@@ -12,6 +12,7 @@ import {
   SEO_METADATA,
 } from "@/content";
 import { FAQAccordion } from "@/components/FAQAccordion";
+import { RevealSection } from "@/components/Motion";
 
 export const metadata: Metadata = {
   title: { absolute: SEO_METADATA.howItWorks.title },
@@ -36,7 +37,7 @@ export default function HowItWorksPage() {
   return (
     <main className="min-h-screen bg-white text-slate">
       {/* 1. Header Section */}
-      <section
+      <RevealSection
         data-section="header"
         id="header"
         className="py-16 md:py-20 px-6 md:px-12 text-center bg-mist border-b border-line"
@@ -52,10 +53,10 @@ export default function HowItWorksPage() {
             From our initial {DISCOVERY_CALL_LENGTH_MINUTES}-minute discovery consultation to full workflow integration, our streamlined 6-step onboarding process ensures HIPAA compliance, clinical quality, and zero disruption to your daily patient care.
           </p>
         </div>
-      </section>
+      </RevealSection>
 
       {/* 2. Timeline Steps */}
-      <section
+      <RevealSection
         data-section="timeline-steps"
         id="timeline-steps"
         className="py-16 px-6 md:px-12 max-w-[1000px] mx-auto space-y-8"
@@ -99,10 +100,10 @@ export default function HowItWorksPage() {
             </div>
           </div>
         ))}
-      </section>
+      </RevealSection>
 
       {/* 3. What to Expect */}
-      <section
+      <RevealSection
         data-section="what-to-expect"
         id="what-to-expect"
         className="py-16 px-6 md:px-12 bg-mist border-y border-line"
@@ -130,10 +131,10 @@ export default function HowItWorksPage() {
             </ul>
           </div>
         </div>
-      </section>
+      </RevealSection>
 
       {/* 4. Communication & Reporting */}
-      <section
+      <RevealSection
         data-section="communication-reporting"
         id="communication-reporting"
         className="py-16 px-6 md:px-12 max-w-[1000px] mx-auto"
@@ -166,10 +167,10 @@ export default function HowItWorksPage() {
             </div>
           ))}
         </div>
-      </section>
+      </RevealSection>
 
       {/* 5. Process FAQ */}
-      <section
+      <RevealSection
         data-section="faq"
         id="faq"
         className="py-16 px-6 md:px-12 bg-mist border-t border-line"
@@ -188,10 +189,10 @@ export default function HowItWorksPage() {
           </div>
           <FAQAccordion items={processFaqs} allowMultiple={false} />
         </div>
-      </section>
+      </RevealSection>
 
       {/* 6. Closing CTA */}
-      <section
+      <RevealSection
         data-section="cta"
         id="cta"
         className="py-20 px-6 md:px-12 bg-ink text-white text-center"
@@ -218,7 +219,7 @@ export default function HowItWorksPage() {
             </Link>
           </div>
         </div>
-      </section>
+      </RevealSection>
     </main>
   );
 }

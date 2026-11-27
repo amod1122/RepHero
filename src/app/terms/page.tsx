@@ -4,6 +4,7 @@ import {
   TERMS_OF_USE,
   SEO_METADATA,
 } from "@/content";
+import { RevealSection } from "@/components/Motion";
 
 export const metadata: Metadata = {
   title: { absolute: SEO_METADATA.terms.title },
@@ -25,7 +26,7 @@ export default function TermsPage() {
     <main className="min-h-screen bg-white text-slate py-16 px-6 md:px-12">
       <div className="max-w-[800px] mx-auto">
         {/* 1. Header Section */}
-        <section
+        <RevealSection
           data-section="header"
           id="header"
           className="border-b border-line pb-8 mb-10"
@@ -42,10 +43,10 @@ export default function TermsPage() {
           <p className="text-sm md:text-base text-slate leading-relaxed mt-4">
             {TERMS_OF_USE.introduction}
           </p>
-        </section>
+        </RevealSection>
 
         {/* 2. Terms Content Section */}
-        <section
+        <RevealSection
           data-section="terms-content"
           id="terms-content"
           className="space-y-10"
@@ -62,7 +63,7 @@ export default function TermsPage() {
               </div>
             </div>
           ))}
-        </section>
+        </RevealSection>
       </div>
     </main>
   );

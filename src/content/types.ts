@@ -100,6 +100,15 @@ export interface FAQItem {
   category: FAQCategory;
 }
 
+export interface TeamMember {
+  id: string;
+  name: string;
+  role: string;
+  bio: string;
+  initials: string;
+  lanyardImage: string;
+}
+
 export interface LegalSection {
   id: string;
   heading: string;

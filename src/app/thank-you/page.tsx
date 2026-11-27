@@ -5,6 +5,7 @@ import {
   DISCOVERY_CALL_LENGTH_MINUTES,
   SEO_METADATA,
 } from "@/content";
+import { RevealSection } from "@/components/Motion";
 
 export const metadata: Metadata = {
   title: { absolute: SEO_METADATA.thankYou.title },
@@ -48,7 +49,7 @@ export default function ThankYouPage() {
     <main className="min-h-screen bg-white text-slate py-16 px-6 md:px-12 flex items-center justify-center">
       <div className="max-w-2xl w-full mx-auto text-center border border-line rounded-[2px] p-8 md:p-12 bg-white shadow-sm">
         {/* 1. Confirmation Section */}
-        <section data-section="confirmation" id="confirmation" className="mb-8">
+        <RevealSection data-section="confirmation" id="confirmation" className="mb-8">
           <span className="text-xs uppercase tracking-[0.08em] text-navy font-medium block mb-2">
             Inquiry Received
           </span>
@@ -58,10 +59,10 @@ export default function ThankYouPage() {
           <p className="text-base text-slate leading-relaxed max-w-lg mx-auto">
             We have received your discovery call request. A {BRAND_NAME} healthcare staffing director will review your practice information and be in touch shortly.
           </p>
-        </section>
+        </RevealSection>
 
         {/* 2. Expectation Cards Section */}
-        <section
+        <RevealSection
           data-section="expectation-cards"
           id="expectation-cards"
           className="text-left mb-8 pt-6 border-t border-line"
@@ -84,10 +85,10 @@ export default function ThankYouPage() {
               </div>
             ))}
           </div>
-        </section>
+        </RevealSection>
 
         {/* 3. Return Links Section */}
-        <section
+        <RevealSection
           data-section="return-links"
           id="return-links"
           className="flex flex-wrap items-center justify-center gap-4 pt-6 border-t border-line"
@@ -110,7 +111,7 @@ export default function ThankYouPage() {
           >
             View Success Stories
           </Link>
-        </section>
+        </RevealSection>
       </div>
     </main>
   );

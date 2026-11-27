@@ -14,6 +14,7 @@ import {
 } from "@/content";
 import { RoleCard } from "@/components/RoleCard";
 import { FAQAccordion } from "@/components/FAQAccordion";
+import { RevealSection } from "@/components/Motion";
 
 export const metadata: Metadata = {
   title: { absolute: SEO_METADATA.services.title },
@@ -63,7 +64,7 @@ export default function ServicesPage() {
       />
 
       {/* 1. Header Section */}
-      <section
+      <RevealSection
         data-section="header"
         id="header"
         className="py-16 md:py-20 px-6 md:px-12 text-center bg-mist border-b border-line"
@@ -79,10 +80,10 @@ export default function ServicesPage() {
             {SERVICES_HEADER.description}
           </p>
         </div>
-      </section>
+      </RevealSection>
 
       {/* 2. Category Tabs */}
-      <section
+      <RevealSection
         data-section="category-tabs"
         id="category-tabs"
         className="sticky top-[73px] z-20 bg-white/95 backdrop-blur-sm border-b border-line py-4 px-6 md:px-12"
@@ -98,10 +99,10 @@ export default function ServicesPage() {
             </a>
           ))}
         </div>
-      </section>
+      </RevealSection>
 
       {/* 3. Role Cards */}
-      <section
+      <RevealSection
         data-section="role-cards"
         id="role-cards"
         className="py-16 px-6 md:px-12 max-w-[1200px] mx-auto space-y-16"
@@ -127,10 +128,10 @@ export default function ServicesPage() {
             </div>
           );
         })}
-      </section>
+      </RevealSection>
 
       {/* 4. Pricing Note */}
-      <section
+      <RevealSection
         data-section="pricing-note"
         id="pricing-note"
         className="py-16 px-6 md:px-12 bg-mist border-y border-line"
@@ -152,10 +153,10 @@ export default function ServicesPage() {
             </p>
           </div>
         </div>
-      </section>
+      </RevealSection>
 
       {/* 5. Trust Block */}
-      <section
+      <RevealSection
         data-section="trust-block"
         id="trust-block"
         className="py-16 px-6 md:px-12 max-w-[1200px] mx-auto"
@@ -181,10 +182,10 @@ export default function ServicesPage() {
             </div>
           ))}
         </div>
-      </section>
+      </RevealSection>
 
       {/* 6. Pricing FAQ */}
-      <section
+      <RevealSection
         data-section="faq"
         id="faq"
         className="py-16 px-6 md:px-12 bg-mist border-t border-line"
@@ -203,10 +204,10 @@ export default function ServicesPage() {
           </div>
           <FAQAccordion items={pricingFaqs} allowMultiple={false} />
         </div>
-      </section>
+      </RevealSection>
 
       {/* 7. Closing CTA */}
-      <section
+      <RevealSection
         data-section="cta"
         id="cta"
         className="py-20 px-6 md:px-12 bg-ink text-white text-center"
@@ -233,7 +234,7 @@ export default function ServicesPage() {
             </Link>
           </div>
         </div>
-      </section>
+      </RevealSection>
     </main>
   );
 }

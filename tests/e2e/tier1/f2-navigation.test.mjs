@@ -16,7 +16,7 @@ const crawler = new RouteCrawler();
 
 describe('F2: Navigation, Sticky Header & Multi-Column Footer', () => {
   // TEST-T1-F2-001: Sticky Header Desktop Configuration
-  test('TEST-T1-F2-001: Sticky header contains logo, 6 nav links, and Book a Call CTA', (t) => {
+  test('TEST-T1-F2-001: Sticky header contains logo, 7 nav links, and Book a Call CTA', (t) => {
     if (skipIfNoExport(t, '/')) return;
 
     const html = crawler.getPageHtml('/');
@@ -24,7 +24,7 @@ describe('F2: Navigation, Sticky Header & Multi-Column Footer', () => {
     assert.ok(landmarks.hasHeader, 'Document must have a <header> element');
 
     const headerHtml = landmarks.headerHtml;
-    // Check 6 desktop links
+    // Check 7 desktop links
     for (const link of NAVIGATION.desktopLinks) {
       assert.ok(
         headerHtml.includes(`href="${link.href}"`) || headerHtml.includes(`href='${link.href}'`),

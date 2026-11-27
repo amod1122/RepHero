@@ -25,9 +25,9 @@ export const COMPANY_NAME = 'RepHero Global LLC';
 export const SITE_URL = 'https://www.rephero.co';
 
 /**
- * 12 Routes defined in the Sitemap:
+ * 13 Routes defined in the Sitemap:
  * /, /services, /industries, /how-it-works, /savings-calculator,
- * /success-stories, /about, /book-a-call, /thank-you, /privacy, /terms, /not-found (404)
+ * /success-stories, /about, /our-team, /book-a-call, /thank-you, /privacy, /terms, /not-found (404)
  */
 export const ROUTES = [
   { path: '/', name: 'Home', exportFile: 'index.html', inSitemap: true },
@@ -37,6 +37,7 @@ export const ROUTES = [
   { path: '/savings-calculator', name: 'Savings Calculator', exportFile: 'savings-calculator/index.html', altExportFile: 'savings-calculator.html', inSitemap: true },
   { path: '/success-stories', name: 'Success Stories', exportFile: 'success-stories/index.html', altExportFile: 'success-stories.html', inSitemap: true },
   { path: '/about', name: 'About', exportFile: 'about/index.html', altExportFile: 'about.html', inSitemap: true },
+  { path: '/our-team', name: 'Our Team', exportFile: 'our-team/index.html', inSitemap: true },
   { path: '/book-a-call', name: 'Book a Call', exportFile: 'book-a-call/index.html', altExportFile: 'book-a-call.html', inSitemap: true },
   { path: '/thank-you', name: 'Thank You', exportFile: 'thank-you/index.html', altExportFile: 'thank-you.html', inSitemap: true },
   { path: '/privacy', name: 'Privacy Policy', exportFile: 'privacy/index.html', altExportFile: 'privacy.html', inSitemap: true },
@@ -104,6 +105,10 @@ export const EXPECTED_SECTIONS = {
     'how-we-work',
     'values',
     'leadership',
+    'cta'
+  ],
+  '/our-team': [
+    'team',
     'cta'
   ],
   '/book-a-call': [
@@ -263,6 +268,7 @@ export const NAVIGATION = {
     { label: 'How It Works', href: '/how-it-works' },
     { label: 'Success Stories', href: '/success-stories' },
     { label: 'Savings Calculator', href: '/savings-calculator' },
+    { label: 'Our Team', href: '/our-team' },
     { label: 'About', href: '/about' }
   ],
   headerCta: { label: 'Book a Call', href: '/book-a-call' },

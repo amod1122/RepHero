@@ -1,9 +1,12 @@
 "use client";
 
 import React, { useState, useRef } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { Plus } from "lucide-react";
 import { FAQ_ITEMS } from "@/content";
 import type { FAQItem, FAQCategory } from "@/content/types";
+import { APPLE_EXIT, APPLE_SPRING_FAST } from "@/lib/motion";
+import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 
 export interface FAQAccordionProps {
   items?: FAQItem[];
@@ -12,6 +15,7 @@ export interface FAQAccordionProps {
   defaultOpenId?: string | null;
   showCategoryFilter?: boolean;
   limit?: number;
+  variant?: "light" | "dark";
   className?: string;
 }
 
@@ -30,9 +34,11 @@ export function FAQAccordion({
   defaultOpenId = null,
   showCategoryFilter = false,
   limit,
+  variant = "light",
   className = "",
 }: FAQAccordionProps) {
   const [selectedCategory, setSelectedCategory] = useState<FAQCategory | "all">(category);
+  const reduceMotion = usePrefersReducedMotion();
   const [openIds, setOpenIds] = useState<string[]>(() => {
     if (defaultOpenId) return [defaultOpenId];
     return [];
@@ -84,7 +90,7 @@ export function FAQAccordion({
   };
 
   return (
-    <div className={`w-full ${className}`}>
+    <div className={`w-full ${variant === "dark" ? "home-faq-accordion" : ""} ${className}`}>
       {/* Optional Category Filter Pills */}
       {showCategoryFilter && (
         <div className="flex flex-wrap items-center gap-2 mb-8" role="tablist" aria-label="FAQ Categories">
@@ -141,28 +147,46 @@ export function FAQAccordion({
                     <span className="font-sans font-semibold text-base sm:text-lg text-charcoal group-hover:text-navy transition-colors pr-6">
                       {item.question}
                     </span>
-                    <span
-                      className={`w-7 h-7 shrink-0 rounded-[2px] bg-mist flex items-center justify-center text-charcoal transition-transform duration-200 ${
-                        isOpen ? "rotate-45 bg-sky/30 text-navy" : "group-hover:bg-slate-200/70"
+                    <motion.span
+                      className={`w-7 h-7 shrink-0 rounded-[2px] bg-mist flex items-center justify-center text-charcoal ${
+                        isOpen ? "bg-sky/30 text-navy" : "group-hover:bg-slate-200/70"
                       }`}
+                      animate={{ rotate: isOpen ? 45 : 0 }}
+                      transition={reduceMotion ? { duration: 0 } : APPLE_SPRING_FAST}
                       aria-hidden="true"
                     >
                       <Plus className="w-4 h-4" />
-                    </span>
+                    </motion.span>
                   </button>
                 </h3>
 
-                <div
-                  id={panelId}
-                  role="region"
-                  aria-labelledby={buttonId}
-                  hidden={!isOpen}
-                  className={`px-1 pb-4 transition-all duration-200 ${isOpen ? "block" : "hidden"}`}
-                >
-                  <p className="text-slate text-sm sm:text-base leading-relaxed">
-                    {item.answer}
-                  </p>
-                </div>
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      id={panelId}
+                      role="region"
+                      aria-labelledby={buttonId}
+                      className="overflow-hidden"
+                      variants={{
+                        hidden: reduceMotion
+                          ? { opacity: 0, transition: APPLE_EXIT }
+                          : { height: 0, opacity: 0, transition: APPLE_EXIT },
+                        visible: reduceMotion
+                          ? { opacity: 1, transition: APPLE_SPRING_FAST }
+                          : { height: "auto", opacity: 1, transition: APPLE_SPRING_FAST },
+                      }}
+                      initial="hidden"
+                      animate="visible"
+                      exit="hidden"
+                    >
+                      <div className="px-1 pb-4">
+                        <p className="text-slate text-sm sm:text-base leading-relaxed">
+                          {item.answer}
+                        </p>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             );
           })}

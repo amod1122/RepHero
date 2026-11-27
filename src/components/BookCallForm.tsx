@@ -290,6 +290,9 @@ function BookCallFormInner({
               name="name"
               required
               maxLength={100}
+              autoComplete="name"
+              autoCapitalize="words"
+              enterKeyHint="next"
               value={name}
               onChange={(e) => {
                 setName(e.target.value);
@@ -319,6 +322,10 @@ function BookCallFormInner({
               name="workEmail"
               required
               maxLength={254}
+              inputMode="email"
+              autoComplete="email"
+              autoCapitalize="none"
+              enterKeyHint="next"
               value={workEmail}
               onChange={(e) => {
                 setWorkEmail(e.target.value);
@@ -350,6 +357,9 @@ function BookCallFormInner({
               name="practiceName"
               required
               maxLength={100}
+              autoComplete="organization"
+              autoCapitalize="words"
+              enterKeyHint="next"
               value={practiceName}
               onChange={(e) => {
                 setPracticeName(e.target.value);
@@ -380,6 +390,7 @@ function BookCallFormInner({
               id={typeId}
               name="practiceType"
               required
+              enterKeyHint="next"
               value={practiceType}
               onChange={(e) => {
                 setPracticeType(e.target.value);
@@ -418,6 +429,9 @@ function BookCallFormInner({
               id={phoneId}
               type="tel"
               name="phone"
+              inputMode="tel"
+              autoComplete="tel"
+              enterKeyHint="next"
               value={phone}
               onChange={(e) => {
                 setPhone(e.target.value);
@@ -444,6 +458,7 @@ function BookCallFormInner({
             <select
               id={roleId}
               name="rolesOfInterest"
+              enterKeyHint="next"
               value={selectedRole}
               onChange={(e) => setSelectedRole(e.target.value)}
               className="w-full px-4 py-2.5 border border-line rounded-[2px] text-charcoal text-sm focus:outline-navy bg-white transition-colors cursor-pointer"
@@ -471,6 +486,7 @@ function BookCallFormInner({
             name="message"
             rows={4}
             maxLength={2000}
+            enterKeyHint="done"
             value={message}
             onChange={(e) => {
               setMessage(e.target.value);

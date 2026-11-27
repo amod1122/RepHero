@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Link from "next/link";
 import {
   BRAND_NAME,
@@ -9,13 +9,24 @@ import {
   INDUSTRIES,
   FAQ_ITEMS,
   TESTIMONIAL_BANNERS,
+  TRUST_POINTS,
+  SERVICE_ROLES,
   filterApprovedTestimonials,
   SEO_METADATA,
 } from "@/content";
-import { TrustStrip } from "@/components/TrustStrip";
-import { SuccessStoryBanner } from "@/components/SuccessStoryBanner";
 import { FAQAccordion } from "@/components/FAQAccordion";
-import { IndustryCard } from "@/components/IndustryCard";
+import { SavingsCalculator } from "@/components/SavingsCalculator";
+import { ShinyButton } from "@/components/ui/shiny-button";
+import {
+  HeroTitle,
+  ProcessJourney,
+  Reveal,
+  RevealHeading,
+} from "@/components/HomeMotion";
+
+export const viewport: Viewport = {
+  themeColor: "#030816",
+};
 
 export const metadata: Metadata = {
   title: { absolute: SEO_METADATA.home.title },
@@ -32,9 +43,34 @@ export const metadata: Metadata = {
   },
 };
 
+const roleGroups = [
+  {
+    id: "admin-and-executive",
+    number: "01",
+    name: "Admin and Executive",
+    description:
+      "Front desk coordination, appointment scheduling, patient intake, and clinical support for the daily work around care.",
+  },
+  {
+    id: "revenue-cycle-and-compliance",
+    number: "02",
+    name: "Revenue Cycle and Compliance",
+    description:
+      "Medical billing, coding, revenue cycle oversight, credentialing, and contracting with clear ownership.",
+  },
+  {
+    id: "extended-and-creative",
+    number: "03",
+    name: "Extended and Creative",
+    description:
+      "After-hours call coverage, urgent triage routing, and dedicated design support when the workday extends beyond the clinic.",
+  },
+];
+
 export default function HomePage() {
   const approvedTestimonials = filterApprovedTestimonials(TESTIMONIAL_BANNERS);
   const homeFaqs = FAQ_ITEMS.slice(0, 6);
+  const featuredTestimonial = approvedTestimonials[0];
 
   const faqJsonLd = {
     "@context": "https://schema.org",
@@ -50,318 +86,292 @@ export default function HomePage() {
   };
 
   return (
-    <main className="min-h-screen bg-white text-slate">
-      {/* FAQPage Structured Data */}
+    <main className="home-page">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
 
-      {/* 1. Hero Section */}
       <section
         data-section="hero"
         id="hero"
-        className="bg-ink text-white py-20 px-6 md:px-12 text-center relative overflow-hidden"
+        className="home-hero"
+        aria-labelledby="home-hero-title"
       >
-        <div className="max-w-[1200px] mx-auto flex flex-col items-center">
-          <span className="text-xs uppercase tracking-[0.08em] text-sky mb-4">
-            Healthcare Staffing Simplified — Dedicated Extension of Your Practice
-          </span>
-          <h1 className="font-serif text-[40px] md:text-[72px] leading-[1.05] tracking-[-0.02em] max-w-4xl font-normal text-white mb-6">
-            {TAGLINE}
-          </h1>
-          <p className="text-lg md:text-xl text-slate-300 max-w-2xl mb-8 leading-relaxed">
-            {SUPPORTING_LINE}
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-4">
-            <Link
-              href="/book-a-call"
-              className="inline-flex items-center justify-center font-medium px-6 py-3 rounded-[2px] bg-white text-ink hover:bg-mist transition-colors shadow-sm"
-            >
-              {CTA_LABELS.primary}
-            </Link>
-            <Link
-              href="/services"
-              className="inline-flex items-center justify-center font-medium px-6 py-3 rounded-[2px] bg-white/10 text-white border border-white/20 hover:bg-white/20 transition-colors"
-            >
-              {CTA_LABELS.secondaryServices}
-            </Link>
-          </div>
+        <div className="home-hero__background" aria-hidden="true" />
+        <div className="home-hero__veil" aria-hidden="true" />
+
+        <div className="home-hero__content container">
+          <p className="home-hero__kicker">{TAGLINE}</p>
+          <HeroTitle>Reclaim your practice&apos;s time.</HeroTitle>
+          <Reveal className="home-hero__intro" delay={0.28}>
+            <p>{SUPPORTING_LINE}</p>
+            <div className="home-hero__actions">
+              <ShinyButton
+                href="/book-a-call"
+                className="home-hero__shiny-button"
+              >
+                {CTA_LABELS.primary}
+              </ShinyButton>
+              <Link className="home-text-link home-text-link--light" href="/services">
+                {CTA_LABELS.secondaryServices}
+              </Link>
+            </div>
+          </Reveal>
+        </div>
+
+        <div className="home-hero__proof container" aria-label="Service highlights">
+          {TRUST_POINTS.map((point, index) => (
+            <Reveal key={point.id} delay={0.42 + index * 0.06} amount={0.5}>
+              <div className="home-hero__proof-item">
+                <span>{point.title}</span>
+              </div>
+            </Reveal>
+          ))}
         </div>
       </section>
 
-      {/* 2. Trust Strip */}
-      <section data-section="trust-strip" id="trust-strip">
-        <TrustStrip variant="light" showProofPoints={true} showLogos={true} />
+      <section className="home-intro" aria-labelledby="home-intro-title">
+        <div className="home-intro__grid container">
+          <RevealHeading id="home-intro-title">
+            Staff the work behind the work.
+          </RevealHeading>
+          <Reveal className="home-intro__copy" delay={0.08}>
+            <p>
+              RepHero gives healthcare practices a trained remote team for
+              administration, revenue cycle, compliance, and extended coverage.
+              Your people stay focused on patients. Your systems keep moving.
+            </p>
+            <Link className="home-text-link" href="/how-it-works">
+              See how the engagement works
+            </Link>
+          </Reveal>
+        </div>
       </section>
 
-      {/* 3. Services Overview */}
       <section
         data-section="services-overview"
         id="services-overview"
-        className="py-20 px-6 md:px-12 max-w-[1200px] mx-auto"
+        className="home-services"
+        aria-labelledby="home-services-title"
       >
-        <div className="text-center mb-12">
-          <span className="text-xs uppercase tracking-[0.08em] text-slate/80 font-medium">
-            Dedicated Healthcare Roles
-          </span>
-          <h2 className="font-serif text-[32px] md:text-[48px] text-charcoal mt-2">
-            Specialized Staffing for Every Workflow
-          </h2>
-          <p className="text-slate max-w-2xl mx-auto mt-4 text-base">
-            From patient intake to medical billing and compliance, our trained remote professionals integrate directly into your EHR and daily practice systems.
-          </p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="p-8 border border-line rounded-[2px] bg-white flex flex-col justify-between">
-            <div>
-              <span className="text-xs text-navy uppercase tracking-wider font-medium">Category 1</span>
-              <h3 className="text-xl font-medium text-charcoal mt-2">Admin and Executive</h3>
-              <p className="text-sm text-slate mt-3 leading-relaxed">
-                Front desk coordination, appointment scheduling, patient intake, and clinical medical assistants providing seamless support.
+        <div className="container">
+          <div className="home-section-head home-section-head--split">
+            <RevealHeading id="home-services-title">
+              The right role for the work.
+            </RevealHeading>
+            <Reveal delay={0.08}>
+              <p>
+                Start with one focused need or build a team around the work your
+                practice cannot keep on the clinical calendar.
               </p>
-            </div>
-            <div className="mt-6 pt-6 border-t border-line">
-              <Link
-                href="/services#admin-and-executive"
-                className="text-xs text-navy font-medium hover:underline inline-flex items-center gap-1"
-              >
-                Explore Admin & Clinical Roles &rarr;
-              </Link>
-            </div>
+            </Reveal>
           </div>
 
-          <div className="p-8 border border-line rounded-[2px] bg-white flex flex-col justify-between">
-            <div>
-              <span className="text-xs text-navy uppercase tracking-wider font-medium">Category 2</span>
-              <h3 className="text-xl font-medium text-charcoal mt-2">Revenue Cycle and Compliance</h3>
-              <p className="text-sm text-slate mt-3 leading-relaxed">
-                Expert medical billers, certified professional coders, full RCM managers, and provider credentialing specialists.
-              </p>
-            </div>
-            <div className="mt-6 pt-6 border-t border-line">
-              <Link
-                href="/services#revenue-cycle-and-compliance"
-                className="text-xs text-navy font-medium hover:underline inline-flex items-center gap-1"
-              >
-                Explore Revenue Cycle Roles &rarr;
-              </Link>
-            </div>
+          <div className="home-service-chapters">
+            {roleGroups.map((group) => {
+              const roles = SERVICE_ROLES.filter(
+                (role) => role.category === group.name,
+              );
+
+              return (
+                <Reveal key={group.id} amount={0.12}>
+                  <article className="home-service-chapter">
+                    <span className="home-service-chapter__number">
+                      {group.number}
+                    </span>
+                    <div className="home-service-chapter__copy">
+                      <h3>
+                        <Link href={`/services#${group.id}`}>{group.name}</Link>
+                      </h3>
+                      <p>{group.description}</p>
+                    </div>
+                    <ul className="home-service-chapter__roles">
+                      {roles.map((role) => (
+                        <li key={role.id}>
+                          <Link href={`/services#${role.id}`}>
+                            <span>{role.name}</span>
+                            <span>{role.priceDisplay}</span>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </article>
+                </Reveal>
+              );
+            })}
           </div>
 
-          <div className="p-8 border border-line rounded-[2px] bg-white flex flex-col justify-between">
-            <div>
-              <span className="text-xs text-navy uppercase tracking-wider font-medium">Category 3</span>
-              <h3 className="text-xl font-medium text-charcoal mt-2">Extended and Creative</h3>
-              <p className="text-sm text-slate mt-3 leading-relaxed">
-                24/7 after-hours call answering, urgent clinical triage routing, and dedicated graphic design for clinic marketing.
-              </p>
-            </div>
-            <div className="mt-6 pt-6 border-t border-line">
-              <Link
-                href="/services#extended-and-creative"
-                className="text-xs text-navy font-medium hover:underline inline-flex items-center gap-1"
-              >
-                Explore Extended & Creative Roles &rarr;
-              </Link>
-            </div>
+          <div className="home-section-action">
+            <Link className="home-text-link" href="/services">
+              View all roles and pricing
+            </Link>
           </div>
-        </div>
-        <div className="text-center mt-10">
-          <Link
-            href="/services"
-            className="inline-flex items-center justify-center font-medium px-6 py-3 rounded-[2px] bg-charcoal text-white hover:bg-ink transition-colors text-sm"
-          >
-            {CTA_LABELS.secondaryServices}
-          </Link>
         </div>
       </section>
 
-      {/* 4. How It Works */}
       <section
         data-section="how-it-works"
         id="how-it-works"
-        className="py-20 px-6 md:px-12 bg-mist border-y border-line"
+        className="home-process"
+        aria-labelledby="home-process-title"
       >
-        <div className="max-w-[1200px] mx-auto">
-          <div className="text-center mb-12">
-            <span className="text-xs uppercase tracking-[0.08em] text-slate/80 font-medium">
-              Streamlined Process
-            </span>
-            <h2 className="font-serif text-[32px] md:text-[48px] text-charcoal mt-2">
-              How It Works
-            </h2>
-            <p className="text-slate max-w-2xl mx-auto mt-4 text-base">
-              From discovery consultation to candidate matching, signed BAA, and ongoing proactive support.
-            </p>
+        <div className="container">
+          <div className="home-section-head home-section-head--split">
+            <RevealHeading id="home-process-title">
+              From first call to daily coverage.
+            </RevealHeading>
+            <Reveal delay={0.08}>
+              <p>
+                A clear path through discovery, agreement, matching, onboarding,
+                and ongoing support.
+              </p>
+            </Reveal>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {HOW_IT_WORKS_STEPS.map((step) => (
-              <div
-                key={step.step}
-                className="p-5 bg-white border border-line rounded-[2px] flex flex-col justify-between"
-              >
-                <div>
-                  <span className="text-xs font-mono font-bold text-navy">Step 0{step.step}</span>
-                  <h3 className="text-sm font-semibold text-charcoal mt-2">{step.title}</h3>
-                  <p className="text-xs text-slate mt-2 leading-relaxed">{step.subtitle}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="text-center mt-10">
-            <Link
-              href="/how-it-works"
-              className="inline-flex items-center justify-center font-medium px-6 py-3 rounded-[2px] bg-charcoal text-white hover:bg-ink transition-colors text-sm"
-            >
-              Learn More About Our Process
+
+          <ProcessJourney steps={HOW_IT_WORKS_STEPS} />
+
+          <div className="home-section-action">
+            <Link className="home-text-link" href="/how-it-works">
+              Learn more about the process
             </Link>
           </div>
         </div>
       </section>
 
-      {/* 5. Savings Calculator Teaser */}
       <section
         data-section="savings-calculator"
         id="savings-calculator"
-        className="py-20 px-6 md:px-12 max-w-[1200px] mx-auto"
+        className="home-calculator-band"
+        aria-labelledby="home-calculator-title"
       >
-        <div className="border border-line rounded-[2px] p-8 md:p-12 bg-white text-center">
-          <span className="text-xs uppercase tracking-[0.08em] text-slate/80 font-medium">
-            Interactive Cost Analysis
-          </span>
-          <h2 className="font-serif text-[32px] md:text-[48px] text-charcoal mt-2">
-            Staffing Savings Calculator
-          </h2>
-          <p className="text-slate max-w-2xl mx-auto mt-4 text-base leading-relaxed">
-            Calculate how much your healthcare practice can save by transitioning administrative and revenue cycle roles to trained remote professionals. Most practices achieve 50-60% typical savings compared to local hiring overhead.
-          </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <Link
-              href="/savings-calculator"
-              className="inline-flex items-center justify-center font-medium px-6 py-3 rounded-[2px] bg-charcoal text-white hover:bg-ink transition-colors text-sm"
-            >
-              {CTA_LABELS.secondaryCalculator}
-            </Link>
+        <div className="home-calculator-band__grid container">
+          <div className="home-calculator-band__copy">
+            <RevealHeading id="home-calculator-title">
+              See what the overhead gap could be.
+            </RevealHeading>
+            <Reveal delay={0.08}>
+              <p>
+                Compare your current cost per team member with RepHero&apos;s
+                published flat monthly rates. Adjust the numbers to see a
+                practical monthly and annual range.
+              </p>
+              <p className="home-calculator-band__note">
+                Estimates only. Actual results vary and are not guaranteed.
+              </p>
+            </Reveal>
           </div>
+
+          <Reveal className="home-calculator" delay={0.12} amount={0.08}>
+            <SavingsCalculator showTitle={false} />
+          </Reveal>
         </div>
       </section>
 
-      {/* 6. Industries */}
       <section
         data-section="industries"
         id="industries"
-        className="py-20 px-6 md:px-12 bg-mist border-y border-line"
+        className="home-industries"
+        aria-labelledby="home-industries-title"
       >
-        <div className="max-w-[1200px] mx-auto">
-          <div className="text-center mb-12">
-            <span className="text-xs uppercase tracking-[0.08em] text-slate/80 font-medium">
-              Healthcare Verticals
-            </span>
-            <h2 className="font-serif text-[32px] md:text-[48px] text-charcoal mt-2">
-              Industries We Serve
-            </h2>
-            <p className="text-slate max-w-2xl mx-auto mt-4 text-base">
-              Tailored staffing solutions designed around the specific workflows, compliance demands, and software platforms of medical and dental practices.
-            </p>
+        <div className="container">
+          <div className="home-section-head home-section-head--split">
+            <RevealHeading id="home-industries-title">
+              Built around your specialty.
+            </RevealHeading>
+            <Reveal delay={0.08}>
+              <p>
+                Staffing shaped around the workflows, compliance demands, and
+                software platforms your team already uses.
+              </p>
+            </Reveal>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {INDUSTRIES.map((industry) => (
-              <IndustryCard key={industry.id} industry={industry} variant="card" />
-            ))}
+
+          <div className="home-industries__layout">
+            <ul className="home-industry-list">
+              {INDUSTRIES.map((industry, index) => (
+                <li key={industry.id}>
+                  <Reveal delay={index * 0.035} amount={0.3}>
+                    <Link href={`/industries#${industry.anchorId}`}>
+                      <span>{industry.name}</span>
+                      <span>{industry.headline}</span>
+                    </Link>
+                  </Reveal>
+                </li>
+              ))}
+            </ul>
+
+            {featuredTestimonial ? (
+              <Reveal className="home-story" delay={0.1} amount={0.12}>
+                <figure id="success-stories" data-section="success-stories">
+                  <blockquote>
+                    <p>&ldquo;{featuredTestimonial.quote}&rdquo;</p>
+                  </blockquote>
+                  <figcaption>
+                    <span>{featuredTestimonial.attribution}</span>
+                    <span>{featuredTestimonial.serviceHighlighted}</span>
+                  </figcaption>
+                  <Link className="home-text-link" href="/success-stories">
+                    Read more success stories
+                  </Link>
+                </figure>
+              </Reveal>
+            ) : null}
           </div>
-          <div className="text-center mt-10">
-            <Link
-              href="/industries"
-              className="inline-flex items-center justify-center font-medium px-6 py-3 rounded-[2px] bg-charcoal text-white hover:bg-ink transition-colors text-sm"
-            >
-              View All Industries
+
+          <div className="home-section-action">
+            <Link className="home-text-link" href="/industries">
+              View all industries
             </Link>
           </div>
         </div>
       </section>
 
-      {/* 7. Success Stories */}
-      <section
-        data-section="success-stories"
-        id="success-stories"
-        className="py-20 px-6 md:px-12 max-w-[1200px] mx-auto"
-      >
-        <div className="text-center mb-12">
-          <span className="text-xs uppercase tracking-[0.08em] text-slate/80 font-medium">
-            Client Proof
-          </span>
-          <h2 className="font-serif text-[32px] md:text-[48px] text-charcoal mt-2">
-            Client Success Stories
-          </h2>
-          <p className="text-slate max-w-2xl mx-auto mt-4 text-base">
-            See how US practices eliminate phone bottlenecks, reduce overhead, and scale operations with RepHero.
-          </p>
-        </div>
-        {approvedTestimonials.length > 0 && (
-          <div className="flex justify-center">
-            <SuccessStoryBanner testimonial={approvedTestimonials[0]} />
-          </div>
-        )}
-        <div className="text-center mt-8">
-          <Link
-            href="/success-stories"
-            className="inline-flex items-center justify-center font-medium px-6 py-3 rounded-[2px] bg-charcoal text-white hover:bg-ink transition-colors text-sm"
-          >
-            Read More Success Stories
-          </Link>
-        </div>
-      </section>
-
-      {/* 8. FAQ */}
       <section
         data-section="faq"
         id="faq"
-        className="py-20 px-6 md:px-12 bg-mist border-t border-line"
+        className="home-faq"
+        aria-labelledby="home-faq-title"
       >
-        <div className="max-w-[800px] mx-auto">
-          <div className="text-center mb-12">
-            <span className="text-xs uppercase tracking-[0.08em] text-slate/80 font-medium">
-              Common Inquiries
-            </span>
-            <h2 className="font-serif text-[32px] md:text-[48px] text-charcoal mt-2">
-              Frequently Asked Questions
-            </h2>
-            <p className="text-slate max-w-xl mx-auto mt-4 text-base">
-              Clear answers regarding HIPAA compliance, onboarding timelines, and flat monthly pricing.
-            </p>
+        <div className="home-faq__layout container">
+          <div className="home-section-head">
+            <RevealHeading id="home-faq-title">
+              Questions before you book.
+            </RevealHeading>
+            <Reveal delay={0.08}>
+              <p>Clear answers on HIPAA, onboarding, and flat monthly pricing.</p>
+            </Reveal>
           </div>
-          <FAQAccordion items={homeFaqs} allowMultiple={false} />
+          <Reveal delay={0.08} amount={0.08}>
+            <FAQAccordion items={homeFaqs} allowMultiple={false} />
+          </Reveal>
         </div>
       </section>
 
-      {/* 9. Final CTA */}
       <section
         data-section="cta"
         id="cta"
-        className="py-20 px-6 md:px-12 bg-ink text-white text-center"
+        className="home-cta"
+        aria-labelledby="home-cta-title"
       >
-        <div className="max-w-[800px] mx-auto">
-          <h2 className="font-serif text-[36px] md:text-[52px] leading-tight mb-6">
-            Ready to Give Your Practice Its Time Back?
-          </h2>
-          <p className="text-lg text-slate-300 max-w-xl mx-auto mb-8">
-            Schedule a focused 15-minute consultation to evaluate your practice workflows and review candidate profiles.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link
-              href="/book-a-call"
-              className="inline-flex items-center justify-center font-medium px-6 py-3 rounded-[2px] bg-white text-ink hover:bg-mist transition-colors shadow-sm"
-            >
-              {CTA_LABELS.primary}
-            </Link>
-            <Link
-              href="/services"
-              className="inline-flex items-center justify-center font-medium px-6 py-3 rounded-[2px] bg-white/10 text-white border border-white/20 hover:bg-white/20 transition-colors"
-            >
-              {CTA_LABELS.secondaryServices}
-            </Link>
-          </div>
+        <div className="home-cta__inner container">
+          <RevealHeading id="home-cta-title">
+            Put the admin work in good hands.
+          </RevealHeading>
+          <Reveal delay={0.08}>
+            <p>
+              Schedule a focused 15-minute consultation to review your workflows
+              and candidate profiles.
+            </p>
+            <div className="home-cta__actions">
+              <Link className="home-button home-button--light" href="/book-a-call">
+                {CTA_LABELS.primary}
+              </Link>
+              <Link className="home-text-link home-text-link--light" href="/services">
+                {CTA_LABELS.secondaryServices}
+              </Link>
+            </div>
+          </Reveal>
         </div>
       </section>
     </main>

@@ -1,6 +1,9 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -10,23 +13,23 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        ink: "#090E12",
-        navy: "#0F3554",
-        "deep-navy": "#0F3554",
-        charcoal: "#131D25",
-        mist: "#F7F8FA",
-        sky: "#C6DDF5",
-        peach: "#FFE3D1",
-        slate: "#4A5560",
-        line: "#E3E6EA",
+        ink: "#050A14",
+        navy: "#071A36",
+        "deep-navy": "#071A36",
+        charcoal: "#0B1220",
+        mist: "#F5F8FC",
+        sky: "#DDEBFF",
+        peach: "#FFE6DD",
+        slate: "#667085",
+        line: "#DCE3EC",
         // Semantic aliases
-        border: "#E3E6EA",
+        border: "#DCE3EC",
         background: "#FFFFFF",
-        foreground: "#131D25",
+        foreground: "#050A14",
       },
       fontFamily: {
-        serif: ["var(--font-instrument-serif)", "Instrument Serif", "Georgia", "serif"],
-        sans: ["var(--font-inter)", "Inter", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "sans-serif"],
+        serif: ["var(--font-cormorant)", "Cormorant Garamond", "Georgia", "serif"],
+        sans: ["var(--font-dm-sans)", "DM Sans", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "sans-serif"],
       },
       borderRadius: {
         none: "0px",

@@ -4,6 +4,7 @@ import {
   PRIVACY_POLICY,
   SEO_METADATA,
 } from "@/content";
+import { RevealSection } from "@/components/Motion";
 
 export const metadata: Metadata = {
   title: { absolute: SEO_METADATA.privacy.title },
@@ -25,7 +26,7 @@ export default function PrivacyPage() {
     <main className="min-h-screen bg-white text-slate py-16 px-6 md:px-12">
       <div className="max-w-[800px] mx-auto">
         {/* 1. Header Section */}
-        <section
+        <RevealSection
           data-section="header"
           id="header"
           className="border-b border-line pb-8 mb-10"
@@ -42,10 +43,10 @@ export default function PrivacyPage() {
           <p className="text-sm md:text-base text-slate leading-relaxed mt-4">
             {PRIVACY_POLICY.introduction}
           </p>
-        </section>
+        </RevealSection>
 
         {/* 2. Policy Content Section */}
-        <section
+        <RevealSection
           data-section="policy-content"
           id="policy-content"
           className="space-y-10"
@@ -62,7 +63,7 @@ export default function PrivacyPage() {
               </div>
             </div>
           ))}
-        </section>
+        </RevealSection>
       </div>
     </main>
   );
