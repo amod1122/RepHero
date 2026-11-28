@@ -51,7 +51,7 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
     title: "Contact",
     links: [
       { label: "Book a Discovery Call", href: "/book-a-call" },
-      { label: "hello@rephero.co", href: "mailto:hello@rephero.co" },
+      { label: "sarahali@rephero.co", href: "mailto:sarahali@rephero.co" },
       { label: "+1 (800) 555-0199", href: "tel:+18005550199" },
       { label: "LinkedIn", href: "https://www.linkedin.com/company/rephero-global", isExternal: true },
     ],

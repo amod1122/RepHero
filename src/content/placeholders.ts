@@ -128,7 +128,7 @@ export const PLACEHOLDERS_CATALOG: PlaceholderItem[] = [
     category: "copy",
     status: "Placeholder",
     notes: "Real corporate email, phone number, and physical office location required before public launch.",
-    fallbackValue: "Email: hello@rephero.co | Phone: +1 (800) 555-0199 | Location: United States",
+    fallbackValue: "Email: sarahali@rephero.co | Phone: +1 (800) 555-0199 | Location: United States",
     resolved: false,
   },
   {

@@ -54,7 +54,7 @@ export const PRIVACY_POLICY: LegalPolicy = {
       id: "contact-rights",
       heading: "6. Your Rights and Contact Information",
       content: [
-        "You may request access to, correction of, or deletion of your business contact information by contacting us at hello@rephero.co.",
+        "You may request access to, correction of, or deletion of your business contact information by contacting us at sarahali@rephero.co.",
         "RepHero Global LLC, 100 Pine Street, Suite 1250, San Francisco, CA 94111.",
       ],
     },
@@ -112,7 +112,7 @@ export const TERMS_OF_USE: LegalPolicy = {
       content: [
         "To the fullest extent permitted by law, RepHero Global LLC shall not be liable for any indirect, incidental, consequential, or punitive damages arising from your access to or inability to use this website.",
         "These Terms are governed by and construed in accordance with the laws of the State of Delaware, without regard to its conflict of law principles.",
-        "For inquiries regarding these Terms, contact hello@rephero.co.",
+        "For inquiries regarding these Terms, contact sarahali@rephero.co.",
       ],
     },
   ],

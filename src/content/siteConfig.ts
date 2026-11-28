@@ -13,7 +13,7 @@ export const PHI_WARNING_NOTICE = "Notice: Do not include protected health infor
 export const COPYRIGHT_TEXT = "© 2026 RepHero Global LLC. All rights reserved.";
 
 export const CONTACT_INFO = {
-  email: "hello@rephero.co",
+  email: "sarahali@rephero.co",
   phone: "+1 (800) 555-0199", // PLACEHOLDER
   location: "United States",
   address: "100 Pine Street, Suite 1250, San Francisco, CA 94111", // PLACEHOLDER
